@@ -1298,7 +1298,7 @@
 
   .gift-date {
     flex-shrink: 0;
-    width: 130px;
+    width: 175px;
     padding: 4px 6px;
     border: 1px dashed var(--text-soft);
     border-radius: 8px;
@@ -1311,6 +1311,50 @@
   .gift-date:focus { outline: none; border-color: var(--primary); color: var(--text); }
   .gift-date.set { border-color: var(--primary); color: var(--primary); border-style: solid; }
   [data-theme="arcade"] .gift-date { font-family: "VT323", monospace; font-size: 0.95rem; }
+
+  .edit-btn {
+    font-size: 0.95rem !important;
+  }
+  .gift-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+  .gift-edit input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--text-soft);
+    border-radius: 8px;
+    background: var(--gift-card-bg);
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+  .gift-edit input:focus { outline: none; border-color: var(--primary); }
+  [data-theme="arcade"] .gift-edit input { font-family: "VT323", monospace; font-size: 1.05rem; }
+  .gift-edit-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .gift-list li .gift-edit-actions button {
+    width: auto;
+    height: auto;
+    padding: 6px 14px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    background: transparent;
+    color: var(--primary);
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  [data-theme="arcade"] .gift-list li .gift-edit-actions button { font-family: "VT323", monospace; font-size: 1rem; }
+  .gift-list li .gift-edit-actions button:hover { background: var(--primary); color: #fff; }
+  .gift-list li .gift-edit-actions button.filled { background: var(--primary); color: #fff; }
+  [data-theme="arcade"] .gift-list li .gift-edit-actions button.filled { color: #000; }
 
   .gift-lock-indicator {
     font-size: 0.72rem;
@@ -1437,7 +1481,7 @@
     <div class="setup-card">
       <span class="step-label">Step 5</span>
       <h3>Gifts</h3>
-      <p class="help">Add anything: a dinner reservation, a playlist, a place, a joke, an IOU. Optional links open when revealed. Tap ☆ to mark a special "jackpot" prize that glows in the dome. Set a date to lock a gift until then — perfect for advent-style surprises.</p>
+      <p class="help">Add anything: a dinner reservation, a playlist, a place, a joke, an IOU. Optional links open when revealed. Tap ✎ to edit, ☆ to mark a special "jackpot" prize that glows in the dome. Set a date and time to lock a gift until then — perfect for advent-style surprises. Lock times use the recipient's local timezone.</p>
       <form class="add-form" id="setupAddForm">
         <input type="text" id="setupGiftInput" placeholder="Gift name (e.g. Movie night)" maxlength="80" required>
         <div class="row">
@@ -1726,7 +1770,7 @@
   <aside class="gift-panel" id="giftPanel" aria-label="Manage gifts">
     <button class="panel-close" id="panelClose" aria-label="Close panel">×</button>
     <h2>Edit gifts</h2>
-    <p class="panel-sub">Add a name and an optional link. Links open when the gift is revealed.</p>
+    <p class="panel-sub">Add a name and an optional link. Tap ✎ to edit. Lock times use your local timezone.</p>
     <form class="add-form" id="addForm">
       <input type="text" id="giftInput" placeholder="Gift name (e.g. Movie night)" maxlength="80" required>
       <div class="row">
@@ -2120,29 +2164,48 @@ window.qrSvg = (() => {
     arcade: "[ PLAY AGAIN ]"
   };
 
-  function todayIso() { return new Date().toISOString().slice(0, 10); }
-  function maxLockIso() {
+  function nowLocalIso() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function maxLockLocalIso() {
     const d = new Date();
     d.setFullYear(d.getFullYear() + 2);
-    return d.toISOString().slice(0, 10);
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function normalizeUnlockOn(s) {
+    if (!s) return null;
+    return s.length === 10 ? s + "T00:00" : s;
+  }
+  function unlockHasTime(s) {
+    const n = normalizeUnlockOn(s);
+    if (!n) return false;
+    return !n.endsWith("T00:00");
   }
   function isUnlocked(gift) {
     if (!gift || !gift.unlockOn) return true;
-    return gift.unlockOn <= todayIso();
+    return normalizeUnlockOn(gift.unlockOn) <= nowLocalIso();
   }
   function nextUnlockDate() {
-    const today = todayIso();
+    const now = nowLocalIso();
     let next = null;
     for (const g of runtime.gifts) {
-      if (g && g.unlockOn && g.unlockOn > today) {
-        if (!next || g.unlockOn < next) next = g.unlockOn;
+      if (g && g.unlockOn) {
+        const u = normalizeUnlockOn(g.unlockOn);
+        if (u > now && (!next || u < next)) next = u;
       }
     }
     return next;
   }
   function formatUnlockDate(iso) {
     try {
-      const d = new Date(iso + "T00:00:00");
+      const norm = normalizeUnlockOn(iso) || iso;
+      const d = new Date(norm);
+      if (unlockHasTime(iso)) {
+        return d.toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+      }
       return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
     } catch(e) { return iso; }
   }
@@ -2375,7 +2438,9 @@ window.qrSvg = (() => {
     isAdmin: false,
     isSpinning: false,
     round: { queue: [], index: 0, total: 0 },
-    setupDraft: null
+    setupDraft: null,
+    editingSetup: new Set(),
+    editingRecipient: new Set()
   };
 
   function setMode(mode) {
@@ -2485,6 +2550,18 @@ window.qrSvg = (() => {
     }
     runtime.setupDraft.gifts.forEach((g, i) => {
       const li = document.createElement("li");
+      if (runtime.editingSetup.has(i)) {
+        li.appendChild(buildEditRow(g, () => {
+          runtime.editingSetup.delete(i);
+          saveCurrentDraft();
+          renderSetupGifts();
+        }, () => {
+          runtime.editingSetup.delete(i);
+          renderSetupGifts();
+        }));
+        list.appendChild(li);
+        return;
+      }
       const info = document.createElement("div");
       info.className = "gift-info";
       const text = document.createElement("div");
@@ -2503,17 +2580,18 @@ window.qrSvg = (() => {
       if (g.unlockOn) {
         const lk = document.createElement("span");
         lk.className = "gift-lock-indicator";
-        const today = todayIso();
-        lk.textContent = (g.unlockOn > today ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn);
+        const locked = !isUnlocked(g);
+        const tzNote = unlockHasTime(g.unlockOn) ? " (your local time)" : "";
+        lk.textContent = (locked ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn) + tzNote;
         info.appendChild(lk);
       }
       const dateInput = document.createElement("input");
-      dateInput.type = "date";
+      dateInput.type = "datetime-local";
       dateInput.className = "gift-date" + (g.unlockOn ? " set" : "");
-      dateInput.value = g.unlockOn || "";
-      dateInput.min = todayIso();
-      dateInput.max = maxLockIso();
-      dateInput.title = "Lock this gift until a date";
+      dateInput.value = g.unlockOn ? normalizeUnlockOn(g.unlockOn) : "";
+      dateInput.min = nowLocalIso();
+      dateInput.max = maxLockLocalIso();
+      dateInput.title = "Lock this gift until a date and time (your local time)";
       dateInput.addEventListener("change", () => {
         g.unlockOn = dateInput.value || undefined;
         if (!g.unlockOn) delete g.unlockOn;
@@ -2530,20 +2608,74 @@ window.qrSvg = (() => {
         saveCurrentDraft();
         renderSetupGifts();
       });
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "edit-btn";
+      editBtn.innerHTML = "✎";
+      editBtn.title = "Edit name and link";
+      editBtn.addEventListener("click", () => {
+        runtime.editingSetup.add(i);
+        renderSetupGifts();
+      });
       const btn = document.createElement("button");
       btn.innerHTML = "×";
       btn.title = "Remove";
       btn.addEventListener("click", () => {
         runtime.setupDraft.gifts.splice(i, 1);
+        runtime.editingSetup.clear();
         saveCurrentDraft();
         renderSetupGifts();
       });
       li.appendChild(info);
       li.appendChild(dateInput);
+      li.appendChild(editBtn);
       li.appendChild(star);
       li.appendChild(btn);
       list.appendChild(li);
     });
+  }
+
+  function buildEditRow(g, onSave, onCancel) {
+    const wrap = document.createElement("div");
+    wrap.className = "gift-edit";
+    const nameIn = document.createElement("input");
+    nameIn.type = "text";
+    nameIn.maxLength = 80;
+    nameIn.value = g.name || "";
+    nameIn.placeholder = "Gift name";
+    const urlIn = document.createElement("input");
+    urlIn.type = "url";
+    urlIn.maxLength = 500;
+    urlIn.value = g.url || "";
+    urlIn.placeholder = "Optional link (https://…)";
+    const actions = document.createElement("div");
+    actions.className = "gift-edit-actions";
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "small-btn filled";
+    save.textContent = "Save";
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.className = "small-btn";
+    cancel.textContent = "Cancel";
+    save.addEventListener("click", () => {
+      const newName = nameIn.value.trim();
+      if (!newName) { nameIn.focus(); return; }
+      g.name = newName;
+      const newUrl = urlIn.value.trim();
+      if (newUrl) g.url = newUrl; else delete g.url;
+      onSave();
+    });
+    cancel.addEventListener("click", onCancel);
+    nameIn.addEventListener("keydown", e => { if (e.key === "Enter") save.click(); if (e.key === "Escape") onCancel(); });
+    urlIn.addEventListener("keydown", e => { if (e.key === "Enter") save.click(); if (e.key === "Escape") onCancel(); });
+    actions.appendChild(save);
+    actions.appendChild(cancel);
+    wrap.appendChild(nameIn);
+    wrap.appendChild(urlIn);
+    wrap.appendChild(actions);
+    setTimeout(() => nameIn.focus(), 0);
+    return wrap;
   }
 
   els.setupAddForm.addEventListener("submit", e => {
@@ -3273,6 +3405,18 @@ window.qrSvg = (() => {
     }
     runtime.gifts.forEach((g, i) => {
       const li = document.createElement("li");
+      if (runtime.editingRecipient.has(i)) {
+        li.appendChild(buildEditRow(g, () => {
+          runtime.editingRecipient.delete(i);
+          renderRecipientGifts();
+          rebuildRoundFromEdit();
+        }, () => {
+          runtime.editingRecipient.delete(i);
+          renderRecipientGifts();
+        }));
+        els.giftListEl.appendChild(li);
+        return;
+      }
       const info = document.createElement("div");
       info.className = "gift-info";
       const text = document.createElement("div");
@@ -3291,17 +3435,18 @@ window.qrSvg = (() => {
       if (g.unlockOn) {
         const lk = document.createElement("span");
         lk.className = "gift-lock-indicator";
-        const today = todayIso();
-        lk.textContent = (g.unlockOn > today ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn);
+        const locked = !isUnlocked(g);
+        const tzNote = unlockHasTime(g.unlockOn) ? " (your local time)" : "";
+        lk.textContent = (locked ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn) + tzNote;
         info.appendChild(lk);
       }
       const dateInput = document.createElement("input");
-      dateInput.type = "date";
+      dateInput.type = "datetime-local";
       dateInput.className = "gift-date" + (g.unlockOn ? " set" : "");
-      dateInput.value = g.unlockOn || "";
-      dateInput.min = todayIso();
-      dateInput.max = maxLockIso();
-      dateInput.title = "Lock this gift until a date";
+      dateInput.value = g.unlockOn ? normalizeUnlockOn(g.unlockOn) : "";
+      dateInput.min = nowLocalIso();
+      dateInput.max = maxLockLocalIso();
+      dateInput.title = "Lock this gift until a date and time (your local time)";
       dateInput.addEventListener("change", () => {
         g.unlockOn = dateInput.value || undefined;
         if (!g.unlockOn) delete g.unlockOn;
@@ -3318,16 +3463,27 @@ window.qrSvg = (() => {
         renderRecipientGifts();
         rebuildRoundFromEdit();
       });
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "edit-btn";
+      editBtn.innerHTML = "✎";
+      editBtn.title = "Edit name and link";
+      editBtn.addEventListener("click", () => {
+        runtime.editingRecipient.add(i);
+        renderRecipientGifts();
+      });
       const btn = document.createElement("button");
       btn.innerHTML = "×";
       btn.title = "Remove";
       btn.addEventListener("click", () => {
         runtime.gifts.splice(i, 1);
+        runtime.editingRecipient.clear();
         renderRecipientGifts();
         rebuildRoundFromEdit();
       });
       li.appendChild(info);
       li.appendChild(dateInput);
+      li.appendChild(editBtn);
       li.appendChild(star);
       li.appendChild(btn);
       els.giftListEl.appendChild(li);
