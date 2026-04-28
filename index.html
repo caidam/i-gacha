@@ -1,0 +1,3445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>i-gacha · a little surprise ♡</title>
+<meta name="description" content="A self-contained birthday gachapon. The whole lottery lives in the link — pull the lever to find a little surprise.">
+<meta name="theme-color" content="#ff5d8f">
+<meta property="og:title" content="i-gacha · a little surprise ♡">
+<meta property="og:description" content="A self-contained birthday gachapon. Pull the lever to find a little surprise.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%23ff5d8f'/%3E%3Cpath d='M4 16 a12 12 0 0 1 24 0 z' fill='%23ffffff'/%3E%3Crect x='4' y='15' width='24' height='2' fill='rgba(0,0,0,0.2)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Quicksand:wght@400;500;600;700&family=Press+Start+2P&family=VT323&family=Pacifico&family=Caveat+Brush&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ THEMES ============ */
+  :root,
+  [data-theme="sanrio"] {
+    --bg-1: #ffd9e6;
+    --bg-2: #ffe9f1;
+    --pattern-color: rgba(255,110,160,0.18);
+    --pattern: radial-gradient(circle at 20% 30%, var(--pattern-color) 0 6px, transparent 7px),
+               radial-gradient(circle at 70% 80%, var(--pattern-color) 0 4px, transparent 5px),
+               radial-gradient(circle at 90% 20%, var(--pattern-color) 0 5px, transparent 6px),
+               radial-gradient(circle at 35% 75%, var(--pattern-color) 0 3px, transparent 4px);
+    --pattern-size: 220px 220px;
+    --text: #4a1f37;
+    --text-soft: #8a4868;
+    --primary: #ff5d8f;
+    --primary-dark: #d63a6a;
+    --primary-glow: rgba(255,93,143,0.45);
+    --accent: #ffd84d;
+    --machine-body: #ff8fb1;
+    --machine-body-dark: #e36c92;
+    --machine-glass: rgba(255,250,253,0.85);
+    --machine-glass-stroke: #ffffff;
+    --capsule-a: #fff;
+    --capsule-b: #ff6fa1;
+    --tray: #b94872;
+    --display-font: "Mochiy Pop One", system-ui;
+    --body-font: "Quicksand", system-ui;
+    --button-radius: 999px;
+    --gift-card-bg: #fff;
+    --gift-card-border: #ff5d8f;
+    --surface-on-bg: rgba(255,255,255,0.55);
+  }
+
+  [data-theme="arcade"] {
+    --bg-1: #0a0a1f;
+    --bg-2: #15123a;
+    --pattern-color: rgba(0,255,234,0.08);
+    --pattern: linear-gradient(var(--pattern-color) 1px, transparent 1px),
+               linear-gradient(90deg, var(--pattern-color) 1px, transparent 1px);
+    --pattern-size: 40px 40px;
+    --text: #e8f8ff;
+    --text-soft: #88a8c8;
+    --primary: #00ffea;
+    --primary-dark: #00b8a8;
+    --primary-glow: rgba(0,255,234,0.6);
+    --accent: #ff2bd6;
+    --machine-body: #1a1a3e;
+    --machine-body-dark: #0d0d28;
+    --machine-glass: rgba(0,40,60,0.7);
+    --machine-glass-stroke: #00ffea;
+    --capsule-a: #ff2bd6;
+    --capsule-b: #ffe600;
+    --tray: #050518;
+    --display-font: "Press Start 2P", system-ui;
+    --body-font: "VT323", monospace;
+    --button-radius: 4px;
+    --gift-card-bg: #0a0a1f;
+    --gift-card-border: #00ffea;
+    --surface-on-bg: rgba(0,0,0,0.5);
+  }
+
+  [data-theme="beach"] {
+    --bg-1: #fdf3e0;
+    --bg-2: #c9e7e3;
+    --pattern-color: rgba(255,170,140,0.22);
+    --pattern: radial-gradient(ellipse 14px 5px at 25% 35%, var(--pattern-color) 0 100%, transparent),
+               radial-gradient(ellipse 12px 4px at 70% 70%, var(--pattern-color) 0 100%, transparent),
+               radial-gradient(ellipse 10px 3px at 45% 88%, var(--pattern-color) 0 100%, transparent),
+               radial-gradient(ellipse 16px 5px at 85% 25%, var(--pattern-color) 0 100%, transparent);
+    --pattern-size: 240px 240px;
+    --text: #1f4e5c;
+    --text-soft: #6b9aa3;
+    --primary: #ff7a6c;
+    --primary-dark: #d65a4f;
+    --primary-glow: rgba(255,122,108,0.45);
+    --accent: #ffd35c;
+    --machine-body: #ffb59d;
+    --machine-body-dark: #d68f7a;
+    --machine-glass: rgba(255,253,245,0.78);
+    --machine-glass-stroke: #ffffff;
+    --capsule-a: #ff7a6c;
+    --capsule-b: #7cc6e0;
+    --tray: #b07058;
+    --display-font: "Pacifico", "Mochiy Pop One", system-ui;
+    --body-font: "Quicksand", system-ui;
+    --button-radius: 999px;
+    --gift-card-bg: #fffdf5;
+    --gift-card-border: #ff7a6c;
+    --surface-on-bg: rgba(255,253,245,0.6);
+  }
+
+  [data-theme="cosy"] {
+    --bg-1: #f4ecd8;
+    --bg-2: #e8c8a4;
+    --pattern-color: rgba(180,100,55,0.18);
+    --pattern: radial-gradient(circle at 22% 28%, var(--pattern-color) 0 3px, transparent 4px),
+               radial-gradient(circle at 70% 60%, var(--pattern-color) 0 2px, transparent 3px),
+               radial-gradient(circle at 45% 85%, var(--pattern-color) 0 2.5px, transparent 3.5px),
+               radial-gradient(circle at 88% 22%, var(--pattern-color) 0 2px, transparent 3px);
+    --pattern-size: 160px 160px;
+    --text: #3a2418;
+    --text-soft: #7a5848;
+    --primary: #c47a3d;
+    --primary-dark: #8e5223;
+    --primary-glow: rgba(196,122,61,0.42);
+    --accent: #a13a4f;
+    --machine-body: #d2a172;
+    --machine-body-dark: #a07a52;
+    --machine-glass: rgba(255,248,232,0.72);
+    --machine-glass-stroke: #8e5223;
+    --capsule-a: #f3d090;
+    --capsule-b: #a13a4f;
+    --tray: #5e3820;
+    --display-font: "Caveat Brush", cursive;
+    --body-font: "Lora", serif;
+    --button-radius: 16px;
+    --gift-card-bg: #fff7e8;
+    --gift-card-border: #c47a3d;
+    --surface-on-bg: rgba(255,247,232,0.65);
+  }
+
+  /* ============ BASE ============ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100vh;
+    font-family: var(--body-font);
+    color: var(--text);
+    background:
+      var(--pattern),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    background-size: var(--pattern-size, 100% 100%), 100% 100%, 100% 100%;
+    overflow-x: hidden;
+    transition: background 0.6s ease, color 0.6s ease;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 60px;
+    position: relative;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    text-align: center;
+    margin-bottom: 12px;
+    z-index: 5;
+    padding: 0 56px;
+  }
+
+  .header .eyebrow {
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+  }
+  [data-theme="arcade"] .header .eyebrow {
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+  }
+
+  .header h1 {
+    font-family: var(--display-font);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--primary);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.06);
+    line-height: 1;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  [data-theme="arcade"] .header h1 {
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+    text-shadow: 0 0 12px var(--primary-glow), 0 0 24px var(--primary-glow);
+    letter-spacing: 2px;
+  }
+  [data-theme="beach"] .header h1 {
+    text-shadow: 0 2px 0 rgba(255,180,150,0.4), 0 4px 18px var(--primary-glow);
+    letter-spacing: 1px;
+  }
+  [data-theme="cosy"] .header h1 {
+    text-shadow: 0 2px 0 rgba(160,90,40,0.18);
+  }
+
+  @keyframes tap-pulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+  .header h1.tapped { animation: tap-pulse 0.25s ease; }
+
+  /* ============ THEME DROPDOWN ============ */
+  .theme-menu-wrap {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 60;
+  }
+
+  .theme-trigger {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--surface-on-bg);
+    backdrop-filter: blur(10px);
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, background 0.3s ease;
+  }
+  .theme-trigger:hover { transform: rotate(20deg); }
+  [data-theme="arcade"] .theme-trigger { border: 1px solid var(--primary); box-shadow: 0 0 14px var(--primary-glow); }
+  [data-theme="beach"] .theme-trigger { border: 1px solid var(--primary); }
+  [data-theme="cosy"] .theme-trigger { border: 1px solid var(--primary); }
+
+  .theme-menu {
+    position: absolute;
+    top: 52px; right: 0;
+    min-width: 180px;
+    background: var(--gift-card-bg);
+    border: 2px solid var(--gift-card-border);
+    border-radius: 14px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  }
+  [data-theme="arcade"] .theme-menu { box-shadow: 0 0 24px var(--primary-glow), 0 10px 30px rgba(0,0,0,0.5); }
+
+  .theme-menu.open { display: flex; }
+
+  .theme-menu button {
+    text-align: left;
+    padding: 10px 14px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s ease;
+  }
+  [data-theme="arcade"] .theme-menu button { font-family: "VT323", monospace; font-size: 1.15rem; }
+
+  .theme-menu button:hover { background: rgba(0,0,0,0.05); }
+  [data-theme="arcade"] .theme-menu button:hover { background: rgba(0,255,234,0.1); }
+  [data-theme="beach"] .theme-menu button:hover { background: rgba(255,122,108,0.12); }
+  [data-theme="cosy"] .theme-menu button:hover { background: rgba(196,122,61,0.12); }
+
+  .theme-menu button.active {
+    background: var(--primary);
+    color: #fff;
+  }
+  [data-theme="arcade"] .theme-menu button.active { color: #000; }
+
+  .theme-menu .swatch {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.5);
+    flex-shrink: 0;
+  }
+
+  /* ============ MACHINE STAGE ============ */
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12px 0 40px;
+  }
+
+  .machine-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 6;
+    max-width: 420px;
+    filter: drop-shadow(0 24px 36px rgba(0,0,0,0.18));
+  }
+  .machine-wrap svg { width: 100%; height: 100%; display: block; }
+
+  @keyframes wobble {
+    0%,100% { transform: translateY(0) rotate(0); }
+    50%     { transform: translateY(-2px) rotate(0.4deg); }
+  }
+  .machine-wrap { animation: wobble 4.5s ease-in-out infinite; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0) rotate(0); }
+    20%     { transform: translateX(-6px) rotate(-1deg); }
+    40%     { transform: translateX(6px) rotate(1deg); }
+    60%     { transform: translateX(-4px) rotate(-0.5deg); }
+    80%     { transform: translateX(4px) rotate(0.5deg); }
+  }
+  .machine-wrap.shaking { animation: shake 0.5s ease-in-out 3; }
+
+  .lever-group {
+    transform-origin: 326px 388px;
+    transform-box: view-box;
+    transition: transform 0.4s cubic-bezier(.5,1.6,.4,1);
+    cursor: pointer;
+  }
+  .lever-group.pulled { transform: rotate(110deg); }
+
+  @keyframes bobA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes bobB { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  @keyframes bobC { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  .dome-capsule-1 { animation: bobA 2.6s ease-in-out infinite; transform-origin: center; }
+  .dome-capsule-2 { animation: bobB 3.1s ease-in-out infinite; transform-origin: center; }
+  .dome-capsule-3 { animation: bobC 2.3s ease-in-out infinite; transform-origin: center; }
+  .dome-capsule-4 { animation: bobA 3.4s ease-in-out infinite 0.4s; transform-origin: center; }
+  .dome-capsule-5 { animation: bobB 2.7s ease-in-out infinite 0.8s; transform-origin: center; }
+  .machine-wrap.shaking [class^="dome-capsule"] { animation-duration: 0.3s; }
+
+  @keyframes drop {
+    0%   { transform: translateY(-200px); opacity: 0; }
+    15%  { opacity: 1; }
+    75%  { transform: translateY(54px); }
+    88%  { transform: translateY(46px); }
+    100% { transform: translateY(50px); opacity: 1; }
+  }
+  .drop-capsule {
+    transform: translateY(-200px);
+    opacity: 0;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.22));
+  }
+  .drop-capsule.dropping { animation: drop 0.85s cubic-bezier(.5,.04,.6,.4) forwards; }
+  .drop-capsule.shiny.dropping {
+    filter: drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 22px var(--accent));
+  }
+
+  /* ============ LEVER BUTTON ============ */
+  .pull-btn {
+    margin-top: 28px;
+    padding: 16px 40px;
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--display-font);
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow:
+      0 6px 0 var(--primary-dark),
+      0 12px 32px var(--primary-glow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.3s ease;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+  .pull-btn:hover { transform: translateY(-2px); }
+  .pull-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--primary-dark); }
+  .pull-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  [data-theme="arcade"] .pull-btn {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 0 2px transparent, 0 0 24px var(--primary-glow), inset 0 0 12px var(--primary-glow);
+    text-shadow: 0 0 8px var(--primary-glow);
+    font-size: 0.9rem;
+  }
+  [data-theme="arcade"] .pull-btn:hover { background: var(--primary); color: #000; }
+
+  [data-theme="beach"] .pull-btn {
+    background: linear-gradient(180deg, #ff9686, var(--primary));
+    box-shadow: 0 6px 0 var(--primary-dark), 0 12px 28px var(--primary-glow);
+    letter-spacing: 0.04em;
+    font-size: 1.4rem;
+  }
+
+  [data-theme="cosy"] .pull-btn {
+    box-shadow: 0 6px 0 var(--primary-dark), 0 12px 24px rgba(0,0,0,0.1);
+    font-size: 1.6rem;
+  }
+
+  /* ============ REVEAL OVERLAY ============ */
+  .reveal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    padding: 20px;
+  }
+  .reveal-overlay.show {
+    display: flex;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+  }
+
+  .reveal-stage {
+    position: relative;
+    width: min(420px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .capsule-reveal {
+    width: 180px;
+    height: 240px;
+    position: relative;
+    perspective: 600px;
+  }
+
+  .capsule-half {
+    position: absolute;
+    width: 180px;
+    height: 120px;
+    background: linear-gradient(180deg, var(--capsule-a) 0%, var(--capsule-a) 50%, color-mix(in srgb, var(--capsule-a) 80%, black) 100%);
+    box-shadow: inset -20px 0 30px rgba(0,0,0,0.15), inset 20px 0 30px rgba(255,255,255,0.4);
+    transition: transform 0.8s cubic-bezier(.6,-0.2,.4,1.2), opacity 0.4s ease;
+  }
+  .capsule-top { top: 0; left: 0; border-radius: 90px 90px 0 0; }
+  .capsule-bottom {
+    bottom: 0; left: 0;
+    background: linear-gradient(0deg, var(--capsule-b) 0%, var(--capsule-b) 50%, color-mix(in srgb, var(--capsule-b) 80%, black) 100%);
+    border-radius: 0 0 90px 90px;
+    box-shadow: inset -20px 0 30px rgba(0,0,0,0.2), inset 20px 0 30px rgba(255,255,255,0.3);
+  }
+  .capsule-band {
+    position: absolute;
+    top: 110px;
+    left: -4px;
+    width: 188px;
+    height: 22px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 2px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  @keyframes capsuleWobble {
+    0%   { transform: rotate(-8deg); }
+    25%  { transform: rotate(6deg); }
+    50%  { transform: rotate(-4deg); }
+    75%  { transform: rotate(2deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .capsule-reveal.wobble { animation: capsuleWobble 0.9s ease-out; }
+
+  .capsule-reveal.cracked .capsule-top {
+    transform: translateY(-180px) rotate(-30deg);
+    opacity: 0.85;
+  }
+  .capsule-reveal.cracked .capsule-bottom {
+    transform: translateY(120px) rotate(15deg);
+    opacity: 0.85;
+  }
+  .capsule-reveal.cracked .capsule-band { opacity: 0; transition: opacity 0.2s; }
+
+  .gift-card {
+    background: var(--gift-card-bg);
+    border: 3px solid var(--gift-card-border);
+    border-radius: 24px;
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    transform: scale(0) rotate(-10deg);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease;
+    max-width: 360px;
+    width: 100%;
+    position: relative;
+  }
+  .gift-card.show { transform: scale(1) rotate(0); opacity: 1; }
+
+  [data-theme="sanrio"] .gift-card { border-radius: 32px; border-style: dashed; }
+  [data-theme="arcade"] .gift-card { border-radius: 4px; box-shadow: 0 0 30px var(--primary-glow), 0 20px 60px rgba(0,0,0,0.6); }
+  [data-theme="beach"] .gift-card { border-radius: 28px; box-shadow: 0 16px 40px var(--primary-glow), 0 20px 60px rgba(40,80,90,0.18); }
+  [data-theme="cosy"] .gift-card { border-radius: 18px; box-shadow: 0 14px 32px rgba(160,90,40,0.18); }
+
+  .gift-card .label {
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 10px;
+  }
+  [data-theme="arcade"] .gift-card .label { font-family: "VT323", monospace; font-size: 1.2rem; }
+
+  .gift-card .gift-name {
+    font-family: var(--display-font);
+    font-size: 1.8rem;
+    color: var(--primary);
+    line-height: 1.15;
+    word-wrap: break-word;
+    margin-bottom: 4px;
+  }
+  [data-theme="arcade"] .gift-card .gift-name { font-size: 1.2rem; text-shadow: 0 0 12px var(--primary-glow); }
+  [data-theme="beach"] .gift-card .gift-name { font-size: 2rem; }
+  [data-theme="cosy"] .gift-card .gift-name { font-size: 2.4rem; }
+
+  .gift-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 20px;
+    border-radius: var(--button-radius);
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px var(--primary-glow);
+    transition: transform 0.15s ease;
+  }
+  .gift-link-btn:hover { transform: translateY(-2px); }
+  [data-theme="arcade"] .gift-link-btn { color: #000; font-family: "VT323", monospace; font-size: 1.1rem; }
+
+  .gift-card .corner-deco {
+    position: absolute;
+    width: 32px; height: 32px;
+    color: var(--primary);
+    opacity: 0.6;
+  }
+  .gift-card .corner-deco.tl { top: 8px; left: 8px; }
+  .gift-card .corner-deco.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+  .gift-card .corner-deco.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+  .gift-card .corner-deco.br { bottom: 8px; right: 8px; transform: scale(-1,-1); }
+
+  .reveal-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .small-btn {
+    padding: 10px 22px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    background: transparent;
+    color: var(--primary);
+    font-family: var(--body-font);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+  [data-theme="arcade"] .small-btn { font-family: "VT323", monospace; font-size: 1.2rem; }
+  .small-btn:hover { background: var(--primary); color: #fff; }
+  [data-theme="arcade"] .small-btn:hover { color: #000; }
+  .small-btn.filled { background: var(--primary); color: #fff; }
+  [data-theme="arcade"] .small-btn.filled { color: #000; }
+
+  /* ============ CONFETTI ============ */
+  .confetti {
+    position: absolute;
+    pointer-events: none;
+    width: 12px; height: 12px;
+    top: 50%; left: 50%;
+    will-change: transform, opacity;
+  }
+
+  /* ============ ADMIN UNLOCK ============ */
+  .gear-btn {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 6px 18px var(--primary-glow);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  body.admin .gear-btn { display: flex; }
+  .gear-btn:hover { transform: rotate(45deg); }
+  [data-theme="arcade"] .gear-btn { color: #000; }
+
+  .admin-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    padding: 20px;
+  }
+  .admin-modal.show { display: flex; }
+  .admin-modal-card {
+    background: var(--gift-card-bg);
+    border: 2px solid var(--gift-card-border);
+    border-radius: 18px;
+    padding: 28px 24px;
+    width: min(340px, 100%);
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .admin-modal-card h3 {
+    font-family: var(--display-font);
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+  [data-theme="arcade"] .admin-modal-card h3 { font-size: 0.95rem; }
+  .admin-modal-card p {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+  }
+  [data-theme="arcade"] .admin-modal-card p { font-family: "VT323", monospace; font-size: 1.05rem; }
+  .admin-modal-card input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    text-align: center;
+    letter-spacing: 0.5em;
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    margin-bottom: 14px;
+  }
+  [data-theme="arcade"] .admin-modal-card input { font-family: "VT323", monospace; font-size: 1.4rem; }
+  .admin-modal-card input:focus { box-shadow: 0 0 0 3px var(--primary-glow); }
+  .admin-modal-card input.error {
+    border-color: var(--accent);
+    animation: shake 0.4s;
+  }
+  .admin-modal-actions { display: flex; gap: 10px; justify-content: center; }
+
+  /* ============ GIFT MANAGER PANEL ============ */
+  .gift-panel {
+    position: fixed;
+    top: 0; right: -440px;
+    width: 420px;
+    max-width: 92vw;
+    height: 100%;
+    background: var(--gift-card-bg);
+    border-left: 3px solid var(--gift-card-border);
+    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+    padding: 24px;
+    z-index: 200;
+    overflow-y: auto;
+    transition: right 0.4s cubic-bezier(.5,1,.4,1);
+    color: var(--text);
+  }
+  .gift-panel.open { right: 0; }
+
+  .gift-panel h2 {
+    font-family: var(--display-font);
+    color: var(--primary);
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+  }
+  [data-theme="arcade"] .gift-panel h2 { font-size: 1.1rem; }
+
+  .gift-panel .panel-sub {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    margin-bottom: 18px;
+  }
+
+  .gift-panel .panel-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1.6rem;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    line-height: 1;
+  }
+  .gift-panel .panel-close:hover { background: rgba(0,0,0,0.06); }
+
+  .add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .add-form input {
+    padding: 10px 14px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+  }
+  [data-theme="arcade"] .add-form input { font-family: "VT323", monospace; font-size: 1.1rem; }
+  .add-form input:focus { box-shadow: 0 0 0 3px var(--primary-glow); }
+
+  .add-form .row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .add-form .row input { flex: 1; }
+  .add-form button {
+    padding: 10px 18px;
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--body-font);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  [data-theme="arcade"] .add-form button { color: #000; font-family: "VT323", monospace; font-size: 1.1rem; }
+
+  .form-hint {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    padding: 0 4px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+  }
+
+  .gift-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .gift-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.04);
+    border-radius: 12px;
+    font-size: 0.95rem;
+  }
+  [data-theme="arcade"] .gift-list li { background: rgba(255,255,255,0.06); font-family: "VT323", monospace; font-size: 1.1rem; }
+  [data-theme="cosy"] .gift-list li { background: rgba(196,122,61,0.10); }
+  [data-theme="beach"] .gift-list li { background: rgba(255,122,108,0.10); }
+
+  .gift-list .gift-info { flex: 1; min-width: 0; }
+  .gift-list .gift-info .gift-text { word-wrap: break-word; }
+  .gift-list .gift-info .gift-url {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 2px;
+    display: block;
+    text-decoration: none;
+  }
+  .gift-list .gift-info .gift-url::before { content: "↗ "; }
+  .gift-list .gift-info .gift-url:hover { color: var(--primary); }
+
+  .gift-list li button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-soft);
+    font-size: 1.2rem;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  .gift-list li button:hover { background: var(--accent); color: #fff; }
+
+  .panel-footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--text-soft);
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .panel-footer kbd {
+    background: rgba(0,0,0,0.08);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+  }
+
+  .lock-btn {
+    margin-top: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--text-soft);
+    border-radius: var(--button-radius);
+    background: transparent;
+    color: var(--text-soft);
+    font-family: var(--body-font);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .lock-btn:hover { background: var(--text-soft); color: var(--gift-card-bg); }
+
+  /* ============ FLOATING DECOR ============ */
+  .floater {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 0;
+  }
+  .floater.f1 { top: 10%; left: 5%; animation: float1 8s ease-in-out infinite; }
+  .floater.f2 { top: 22%; right: 8%; animation: float2 10s ease-in-out infinite; }
+  .floater.f3 { bottom: 30%; left: 8%; animation: float1 9s ease-in-out infinite reverse; }
+  .floater.f4 { bottom: 15%; right: 6%; animation: float2 11s ease-in-out infinite; }
+  @keyframes float1 { 0%,100% { transform: translate(0,0) rotate(0); } 50% { transform: translate(10px,-15px) rotate(8deg); } }
+  @keyframes float2 { 0%,100% { transform: translate(0,0) rotate(0); } 50% { transform: translate(-12px,-10px) rotate(-6deg); } }
+
+  /* ============ SETUP WIZARD ============ */
+  .setup-view {
+    display: none;
+    width: 100%;
+    max-width: 560px;
+    margin: 8px auto 60px;
+    position: relative;
+    z-index: 5;
+  }
+  body.is-setup #setupView { display: block; }
+  body.is-share #shareView { display: block; }
+  body.is-lottery #lotteryView { display: flex; flex-direction: column; align-items: center; width: 100%; }
+  body:not(.is-lottery) #lotteryView { display: none; }
+  body:not(.is-locked) #sessionModal { display: none; }
+  body.is-locked #sessionModal { display: flex; }
+
+  .setup-card {
+    background: var(--gift-card-bg);
+    border: 2px solid var(--gift-card-border);
+    border-radius: 18px;
+    padding: 22px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  [data-theme="arcade"] .setup-card { box-shadow: 0 0 18px var(--primary-glow), 0 8px 24px rgba(0,0,0,0.5); border-radius: 6px; }
+
+  .setup-card .step-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+  }
+  [data-theme="arcade"] .setup-card .step-label { font-family: "VT323", monospace; font-size: 0.95rem; letter-spacing: 0.1em; }
+
+  .setup-card h3 {
+    font-family: var(--display-font);
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  [data-theme="arcade"] .setup-card h3 { font-size: 0.95rem; }
+  [data-theme="cosy"] .setup-card h3 { font-size: 1.6rem; }
+
+  .setup-card p.help {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  [data-theme="arcade"] .setup-card p.help { font-family: "VT323", monospace; font-size: 1.05rem; }
+
+  .setup-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    font-family: var(--body-font);
+    font-size: 1rem;
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    margin-bottom: 6px;
+  }
+  .setup-input:focus { box-shadow: 0 0 0 3px var(--primary-glow); }
+  [data-theme="arcade"] .setup-input { font-family: "VT323", monospace; font-size: 1.2rem; }
+
+  .setup-input.error {
+    border-color: var(--accent);
+    animation: shake 0.4s;
+  }
+
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .theme-tile {
+    border: 2px solid rgba(0,0,0,0.12);
+    background: transparent;
+    padding: 12px 14px;
+    border-radius: var(--button-radius);
+    font-family: var(--body-font);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  [data-theme="arcade"] .theme-tile { font-family: "VT323", monospace; font-size: 1.1rem; }
+  .theme-tile:hover { border-color: var(--primary); }
+  .theme-tile.selected {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+  }
+  [data-theme="arcade"] .theme-tile.selected { color: #000; }
+  .theme-tile .swatch-pair {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+  .theme-tile .swatch-pair span {
+    width: 14px; height: 14px; border-radius: 50%;
+    display: inline-block;
+    margin-left: -5px;
+    border: 2px solid var(--gift-card-bg);
+  }
+  .theme-tile .swatch-pair span:first-child { margin-left: 0; }
+
+  .dud-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .dud-slider-row input[type=range] {
+    flex: 1;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+  .dud-slider-row .pct {
+    font-family: var(--display-font);
+    color: var(--primary);
+    font-size: 1.4rem;
+    min-width: 60px;
+    text-align: right;
+  }
+  [data-theme="arcade"] .dud-slider-row .pct { font-size: 0.95rem; }
+
+  .gen-btn {
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--display-font);
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 6px 0 var(--primary-dark), 0 12px 32px var(--primary-glow);
+    margin-top: 4px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  [data-theme="arcade"] .gen-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); font-size: 0.9rem; box-shadow: 0 0 24px var(--primary-glow), inset 0 0 12px var(--primary-glow); text-shadow: 0 0 8px var(--primary-glow); }
+  [data-theme="arcade"] .gen-btn:hover { background: var(--primary); color: #000; }
+  [data-theme="cosy"] .gen-btn { font-size: 1.6rem; }
+  .gen-btn:hover { transform: translateY(-2px); }
+  .gen-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-dark); }
+
+  .share-card { text-align: center; }
+  .share-card h3 { font-size: 1.5rem; }
+  [data-theme="cosy"] .share-card h3 { font-size: 2rem; }
+
+  .share-url {
+    display: flex;
+    gap: 6px;
+    margin: 14px 0 8px;
+  }
+  .share-url input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 2px solid var(--primary);
+    border-radius: var(--button-radius);
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    background: rgba(0,0,0,0.04);
+    color: var(--text);
+  }
+  [data-theme="arcade"] .share-url input { background: rgba(0,255,234,0.06); }
+  .share-url button {
+    padding: 10px 18px;
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--body-font);
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+  [data-theme="arcade"] .share-url button { color: #000; font-family: "VT323", monospace; font-size: 1.05rem; }
+  .share-url button.copied { background: var(--primary-dark); }
+
+  .qr-frame {
+    display: inline-block;
+    padding: 12px;
+    background: #fff;
+    border-radius: 14px;
+    border: 2px solid var(--primary);
+    margin: 8px auto 4px;
+  }
+  [data-theme="arcade"] .qr-frame { box-shadow: 0 0 18px var(--primary-glow); border-radius: 4px; }
+  .qr-frame svg { display: block; width: 200px; height: 200px; }
+  .qr-caption {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    margin: 4px 0 8px;
+  }
+  [data-theme="arcade"] .qr-caption { font-family: "VT323", monospace; font-size: 1rem; }
+  .qr-fallback {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    padding: 30px 20px;
+    border: 2px dashed var(--text-soft);
+    border-radius: 14px;
+    margin: 8px auto;
+    max-width: 240px;
+  }
+
+  .share-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .intro-card {
+    text-align: center;
+    background: linear-gradient(135deg, var(--gift-card-bg), color-mix(in srgb, var(--primary) 8%, var(--gift-card-bg)));
+  }
+  .intro-explainer {
+    margin-top: 8px;
+    text-align: left;
+  }
+  .intro-explainer summary {
+    cursor: pointer;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    list-style: none;
+    text-align: center;
+  }
+  .intro-explainer summary::-webkit-details-marker { display: none; }
+  .intro-explainer summary::before { content: "› "; transition: transform 0.15s ease; display: inline-block; }
+  .intro-explainer[open] summary::before { transform: rotate(90deg); }
+  [data-theme="arcade"] .intro-explainer summary { font-family: "VT323", monospace; font-size: 1rem; }
+  .intro-explainer p {
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+  [data-theme="arcade"] .intro-explainer p { font-family: "VT323", monospace; font-size: 0.95rem; }
+
+  .intro-card .intro-emoji {
+    font-size: 2.6rem;
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .intro-card h2 {
+    font-family: var(--display-font);
+    color: var(--primary);
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  [data-theme="arcade"] .intro-card h2 { font-size: 1.05rem; }
+  [data-theme="cosy"] .intro-card h2 { font-size: 2rem; }
+
+  .privacy-warning {
+    background: var(--primary-glow);
+    color: var(--primary-dark);
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    margin: 10px 0 0;
+    line-height: 1.4;
+  }
+  [data-theme="arcade"] .privacy-warning { color: var(--primary); background: rgba(0,255,234,0.12); border: 1px solid var(--primary); border-radius: 4px; font-family: "VT323", monospace; font-size: 1rem; }
+
+  /* ============ DUD REVEAL ============ */
+  .dud-card {
+    background: var(--gift-card-bg);
+    border: 3px dashed var(--text-soft);
+    border-radius: 24px;
+    padding: 26px 24px 22px;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    transform: scale(0) rotate(-6deg);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease;
+    position: relative;
+    display: none;
+  }
+  .dud-card.show { transform: scale(1) rotate(0); opacity: 1; }
+  .reveal-overlay.dud-mode .dud-card { display: block; }
+  .reveal-overlay.dud-mode .gift-card { display: none; }
+
+  .dud-svg-wrap {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .dud-tagline {
+    font-family: var(--display-font);
+    font-size: 1.4rem;
+    color: var(--text-soft);
+    line-height: 1.2;
+  }
+  [data-theme="arcade"] .dud-tagline { font-size: 1rem; font-family: "Press Start 2P", system-ui; }
+  [data-theme="cosy"] .dud-tagline { font-size: 1.7rem; }
+
+  @keyframes dustExpand {
+    0% { transform: scale(0.2); opacity: 1; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+  .dud-dust .puff { animation: dustExpand 1.8s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+  .dud-dust .puff:nth-child(2) { animation-delay: 0.4s; }
+  .dud-dust .puff:nth-child(3) { animation-delay: 0.8s; }
+
+  @keyframes fishBob {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-5px) rotate(3deg); }
+  }
+  .dud-fish g { animation: fishBob 1.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+  @keyframes notePop {
+    0% { transform: rotate(-14deg) scale(0.5); opacity: 0; }
+    60% { transform: rotate(8deg) scale(1.06); opacity: 1; }
+    100% { transform: rotate(-4deg) scale(1); opacity: 1; }
+  }
+  .dud-note > g { animation: notePop 0.7s ease-out forwards; transform-origin: center; transform-box: fill-box; }
+
+  @keyframes balloonDeflate {
+    0% { transform: scale(1) translateY(0); }
+    20% { transform: scale(1.05, 0.96) translateY(0); }
+    50% { transform: scale(0.85, 0.7) translateY(8px); }
+    100% { transform: scale(0.5, 0.3) translateY(36px); opacity: 0.5; }
+  }
+  .dud-balloon g { animation: balloonDeflate 1.8s cubic-bezier(.4,0,.2,1) forwards; transform-origin: center 100%; transform-box: fill-box; }
+
+  /* ============ GIFT COUNTER + CLAIM HINT + REPEAT BADGE ============ */
+  .gift-counter {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    margin-top: -28px;
+    margin-bottom: 28px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  [data-theme="arcade"] .gift-counter { font-family: "VT323", monospace; font-size: 1.05rem; letter-spacing: 0.05em; }
+  [data-theme="cosy"] .gift-counter { font-family: var(--display-font); font-size: 1.1rem; text-transform: none; letter-spacing: 0; }
+
+  .claim-hint {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--text-soft);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+  [data-theme="arcade"] .claim-hint { font-family: "VT323", monospace; font-size: 0.95rem; font-style: normal; letter-spacing: 0.04em; }
+  [data-theme="cosy"] .claim-hint { font-style: italic; font-size: 0.9rem; }
+
+  /* ============ MACHINE LCD LABEL ============ */
+  #machineLabel {
+    filter: drop-shadow(0 0 1.5px var(--primary)) drop-shadow(0 0 4px var(--primary-glow));
+  }
+
+  /* ============ SHINY CAPSULES + JACKPOT ============ */
+  @keyframes shinyPulse {
+    0%, 100% { filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 6px var(--accent)); }
+    50%      { filter: drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 18px var(--accent)); }
+  }
+  .dome-capsule-1.shiny, .dome-capsule-2.shiny, .dome-capsule-3.shiny,
+  .dome-capsule-4.shiny, .dome-capsule-5.shiny {
+    animation: bobA 2.6s ease-in-out infinite, shinyPulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes consume {
+    0%   { transform: scale(1); opacity: 1; }
+    25%  { transform: scale(1.18); opacity: 1; }
+    100% { transform: scale(0.15); opacity: 0; }
+  }
+  .dome-capsule-1.consumed, .dome-capsule-2.consumed, .dome-capsule-3.consumed,
+  .dome-capsule-4.consumed, .dome-capsule-5.consumed {
+    animation: consume 0.6s cubic-bezier(.5,-0.2,.6,1) forwards !important;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .dome-capsule-1.locked, .dome-capsule-2.locked, .dome-capsule-3.locked,
+  .dome-capsule-4.locked, .dome-capsule-5.locked {
+    animation: none !important;
+    filter: grayscale(0.9) brightness(0.85);
+    opacity: 0.5;
+  }
+  /* small machine shake when a locked pull is attempted */
+  @keyframes lockedShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-7px) rotate(-1deg); }
+    40% { transform: translateX(7px) rotate(1deg); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+  .machine-wrap.locked-shake { animation: lockedShake 0.5s ease-in-out 2; }
+
+  .dud-card.dud-locked { border-color: var(--text-soft); border-style: dashed; }
+  .dud-card.dud-locked .dud-tagline { color: var(--text); }
+  .dud-card.dud-locked .dud-sub { font-size: 0.85rem; color: var(--text-soft); margin-top: 6px; line-height: 1.4; }
+
+  @keyframes shinyCard {
+    0%, 100% { box-shadow: 0 0 14px var(--accent), 0 20px 60px rgba(0,0,0,0.25); }
+    50%      { box-shadow: 0 0 36px var(--accent), 0 0 60px var(--accent), 0 20px 60px rgba(0,0,0,0.25); }
+  }
+  .gift-card.shiny {
+    border-color: var(--accent);
+    border-width: 4px;
+    animation: shinyCard 1.8s ease-in-out infinite;
+  }
+  .gift-card.shiny .label {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+  }
+
+  .shiny-toggle {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-soft);
+    font-size: 1.05rem;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+  .shiny-toggle:hover { transform: scale(1.15); color: var(--accent); }
+  .shiny-toggle.on { color: var(--accent); }
+
+  .gift-date {
+    flex-shrink: 0;
+    width: 130px;
+    padding: 4px 6px;
+    border: 1px dashed var(--text-soft);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-soft);
+    font-family: var(--body-font);
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+  .gift-date:focus { outline: none; border-color: var(--primary); color: var(--text); }
+  .gift-date.set { border-color: var(--primary); color: var(--primary); border-style: solid; }
+  [data-theme="arcade"] .gift-date { font-family: "VT323", monospace; font-size: 0.95rem; }
+
+  .gift-lock-indicator {
+    font-size: 0.72rem;
+    color: var(--primary);
+    margin-top: 2px;
+    display: block;
+  }
+  [data-theme="arcade"] .gift-lock-indicator { font-family: "VT323", monospace; font-size: 0.95rem; }
+
+  .copy-link-btn {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: 2px dashed var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: var(--button-radius);
+    font-family: var(--body-font);
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.15s ease;
+    font-size: 0.95rem;
+  }
+  .copy-link-btn:hover { background: var(--primary); color: #fff; border-style: solid; }
+  [data-theme="arcade"] .copy-link-btn { font-family: "VT323", monospace; font-size: 1.1rem; }
+  [data-theme="arcade"] .copy-link-btn:hover { color: #000; }
+  .copy-link-btn.copied { background: var(--primary); color: #fff; border-style: solid; }
+  [data-theme="arcade"] .copy-link-btn.copied { color: #000; }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 480px) {
+    .header { padding: 0 50px; }
+    .header h1 { font-size: 1.6rem; }
+    .gift-card { padding: 24px 20px; }
+    .gift-card .gift-name { font-size: 1.5rem; }
+    .pull-btn { padding: 14px 32px; font-size: 1rem; }
+    .gift-panel { width: 100%; max-width: 100%; }
+    .setup-card { padding: 18px 16px; }
+    .theme-grid { grid-template-columns: 1fr; }
+    .qr-frame svg { width: 180px; height: 180px; }
+    .gift-counter { margin-top: -20px; margin-bottom: 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <noscript>
+    <div style="max-width:520px;margin:60px auto;padding:24px;background:#fff;border:2px solid #ff5d8f;border-radius:18px;font-family:system-ui;line-height:1.6;text-align:center">
+      <h2 style="color:#ff5d8f;margin-bottom:8px">i-gacha</h2>
+      <p>This page needs JavaScript enabled — the entire lottery (encryption, animations, link decoding) runs in your browser. Please re-open in a browser with JS turned on.</p>
+    </div>
+  </noscript>
+
+  <!-- Theme dropdown -->
+  <div class="theme-menu-wrap">
+    <button class="theme-trigger" id="themeTrigger" aria-label="Choose theme" aria-haspopup="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="13.5" cy="6.5" r="1.5" fill="currentColor"/>
+        <circle cx="17.5" cy="10.5" r="1.5" fill="currentColor"/>
+        <circle cx="8.5" cy="7.5" r="1.5" fill="currentColor"/>
+        <circle cx="6.5" cy="12.5" r="1.5" fill="currentColor"/>
+        <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.62-.38-1 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"/>
+      </svg>
+    </button>
+    <div class="theme-menu" id="themeMenu" role="menu">
+      <button data-set-theme="sanrio" role="menuitem"><span class="swatch" style="background:#ff5d8f"></span>Sanrio</button>
+      <button data-set-theme="beach" role="menuitem"><span class="swatch" style="background:#ff7a6c"></span>Beach</button>
+      <button data-set-theme="cosy" role="menuitem"><span class="swatch" style="background:#c47a3d"></span>Cosy</button>
+      <button data-set-theme="arcade" role="menuitem"><span class="swatch" style="background:#00ffea"></span>Arcade</button>
+    </div>
+  </div>
+
+  <!-- Floating decorative elements -->
+  <div class="floater f1" id="floater1"></div>
+  <div class="floater f2" id="floater2"></div>
+  <div class="floater f3" id="floater3"></div>
+  <div class="floater f4" id="floater4"></div>
+
+  <!-- Setup wizard (no #c= in URL) -->
+  <div class="setup-view" id="setupView">
+    <div class="setup-card intro-card">
+      <span class="intro-emoji">✨</span>
+      <h2>Build a birthday gachapon</h2>
+      <p class="help">Pick a vibe, add some gifts, and you'll get a shareable link to send. The whole lottery lives in the link itself — no accounts, no servers.</p>
+      <details class="intro-explainer">
+        <summary>What is this?</summary>
+        <p>i-gacha is a personal gachapon you can build and send to someone. The lottery — gifts, theme, password, dud chance — is encoded directly into the share link, so anyone with the link plays your version, even if they've never seen this site before.</p>
+        <p>Nothing is uploaded anywhere. The page runs entirely in your browser; the link IS the storage. With a session password, gifts are encrypted in the link itself, so even copying the URL into a logbook reveals nothing.</p>
+      </details>
+    </div>
+
+    <div class="setup-card">
+      <span class="step-label">Step 1 — required</span>
+      <h3>Admin password</h3>
+      <p class="help">After sharing, you can come back any time: tap the lottery title 5 times in a row, then enter this password to edit gifts and copy a fresh link. Don't lose it — there's no recovery.</p>
+      <input type="password" class="setup-input" id="setupAdminPw" placeholder="Required" autocomplete="new-password" maxlength="60">
+    </div>
+
+    <div class="setup-card">
+      <span class="step-label">Step 2 — optional</span>
+      <h3>Session password</h3>
+      <p class="help">If set, the recipient enters this to open the lottery, and the gifts are encrypted in the link itself. Leave blank for an open link anyone can play.</p>
+      <input type="password" class="setup-input" id="setupSessionPw" placeholder="Leave blank to share without a password" autocomplete="new-password" maxlength="60">
+    </div>
+
+    <div class="setup-card">
+      <span class="step-label">Step 3</span>
+      <h3>Pick a vibe</h3>
+      <p class="help">The theme styles the whole experience.</p>
+      <div class="theme-grid" id="themeGrid"></div>
+    </div>
+
+    <div class="setup-card">
+      <span class="step-label">Step 4</span>
+      <h3>Dud capsules</h3>
+      <p class="help">Some pulls come up empty for suspense. Set 0% if every pull should be a guaranteed win.</p>
+      <div class="dud-slider-row">
+        <input type="range" id="dudSlider" min="0" max="50" step="5" value="20">
+        <span class="pct" id="dudPct">20%</span>
+      </div>
+      <p class="help" id="dudHelp" style="margin-top:6px;margin-bottom:0"></p>
+    </div>
+
+    <div class="setup-card">
+      <span class="step-label">Step 5</span>
+      <h3>Gifts</h3>
+      <p class="help">Add anything: a dinner reservation, a playlist, a place, a joke, an IOU. Optional links open when revealed. Tap ☆ to mark a special "jackpot" prize that glows in the dome. Set a date to lock a gift until then — perfect for advent-style surprises.</p>
+      <form class="add-form" id="setupAddForm">
+        <input type="text" id="setupGiftInput" placeholder="Gift name (e.g. Movie night)" maxlength="80" required>
+        <div class="row">
+          <input type="url" id="setupGiftUrlInput" placeholder="Optional link (https://…)" maxlength="500">
+          <button type="submit">Add</button>
+        </div>
+      </form>
+      <ul class="gift-list" id="setupGiftList"></ul>
+    </div>
+
+    <button class="gen-btn" id="generateBtn">Generate share link ♡</button>
+  </div>
+
+  <!-- Share view (after generating) -->
+  <div class="setup-view" id="shareView">
+    <div class="setup-card share-card">
+      <span class="step-label">Ready</span>
+      <h3>Your gachapon is ready ♡</h3>
+      <p class="help" id="shareSubcopy">Send this link to the birthday-haver. Or scan the QR.</p>
+
+      <div class="share-url">
+        <input type="text" id="shareUrlInput" readonly>
+        <button id="copyUrlBtn">Copy</button>
+      </div>
+
+      <div id="qrFrame" class="qr-frame"></div>
+      <div class="qr-caption">Scan to play</div>
+
+      <div class="share-actions">
+        <button class="small-btn filled" id="previewBtn">Open the lottery</button>
+        <button class="small-btn" id="editSetupBtn">← Back to edit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lottery view -->
+  <div id="lotteryView">
+  <header class="header">
+    <div class="eyebrow" id="eyebrow">Happy Birthday Lottery</div>
+    <h1 id="title">A Little Surprise For You ♡</h1>
+  </header>
+
+  <main class="stage">
+    <div class="machine-wrap" id="machineWrap">
+      <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" aria-label="Capsule machine">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="var(--machine-body)"/>
+            <stop offset="1" stop-color="var(--machine-body-dark)"/>
+          </linearGradient>
+          <radialGradient id="domeShine" cx="35%" cy="30%" r="60%">
+            <stop offset="0" stop-color="rgba(255,255,255,0.7)"/>
+            <stop offset="0.4" stop-color="rgba(255,255,255,0.15)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+          <linearGradient id="capA" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="var(--capsule-a)"/>
+            <stop offset="1" stop-color="color-mix(in srgb, var(--capsule-a) 75%, black)"/>
+          </linearGradient>
+          <linearGradient id="capB" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="var(--capsule-b)"/>
+            <stop offset="1" stop-color="color-mix(in srgb, var(--capsule-b) 75%, black)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Toppers -->
+        <g class="topper-sanrio" style="display:var(--show-sanrio,block)">
+          <g transform="translate(200,55)">
+            <!-- left loop: wide and gently rounded -->
+            <path d="M -6,-8 C -28,-18 -50,-14 -50,0 C -50,14 -28,18 -6,8 Z"
+                  fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="2" stroke-linejoin="round"/>
+            <!-- right loop -->
+            <path d="M 6,-8 C 28,-18 50,-14 50,0 C 50,14 28,18 6,8 Z"
+                  fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="2" stroke-linejoin="round"/>
+            <!-- ribbon tails dangling below the knot -->
+            <path d="M -7,7 L -11,22 L -2,18 L 2,22 L 6,16 L 11,22 L 7,7 Z"
+                  fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- center knot -->
+            <rect x="-8" y="-11" width="16" height="22" rx="4" fill="var(--primary-dark)"/>
+            <!-- knot vertical fold lines -->
+            <line x1="-3" y1="-9" x2="-3" y2="9" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+            <line x1="3" y1="-9" x2="3" y2="9" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+            <!-- soft loop shines -->
+            <ellipse cx="-30" cy="-5" rx="8" ry="2.5" fill="rgba(255,255,255,0.55)" transform="rotate(-12 -30 -5)"/>
+            <ellipse cx="30" cy="-5" rx="8" ry="2.5" fill="rgba(255,255,255,0.55)" transform="rotate(12 30 -5)"/>
+          </g>
+        </g>
+
+        <g class="topper-arcade" style="display:var(--show-arcade,none)">
+          <g transform="translate(200,55)">
+            <path d="M -8,-30 L 12,-10 L -2,-5 L 8,15 L -12,-5 L 2,-10 Z" fill="var(--primary)" filter="drop-shadow(0 0 6px var(--primary-glow))"/>
+            <circle cx="-30" cy="-10" r="3" fill="var(--accent)"/>
+            <circle cx="30" cy="-15" r="2.5" fill="var(--accent)"/>
+            <circle cx="35" cy="5" r="2" fill="var(--primary)"/>
+          </g>
+        </g>
+
+        <g class="topper-beach" style="display:var(--show-beach,none)">
+          <g transform="translate(200,55)">
+            <!-- striped parasol -->
+            <path d="M -55,10 A 55 42 0 0 1 55,10 Z" fill="var(--primary)"/>
+            <path d="M -33,-4 A 33 22 0 0 1 33,-4 Z" fill="var(--accent)"/>
+            <path d="M -28,10 L 0,-32" stroke="rgba(0,0,0,0.15)" stroke-width="1" fill="none"/>
+            <path d="M 28,10 L 0,-32" stroke="rgba(0,0,0,0.15)" stroke-width="1" fill="none"/>
+            <path d="M -55,10 Q 0,4 55,10" stroke="var(--primary-dark)" stroke-width="2" fill="none"/>
+            <circle cx="0" cy="-32" r="3.5" fill="var(--primary-dark)"/>
+            <rect x="-1.5" y="10" width="3" height="6" fill="#6b4226"/>
+            <!-- little sun off to the side -->
+            <circle cx="48" cy="-22" r="6" fill="var(--accent)" opacity="0.85"/>
+            <circle cx="48" cy="-22" r="3" fill="rgba(255,255,255,0.65)"/>
+          </g>
+        </g>
+
+        <g class="topper-cosy" style="display:var(--show-cosy,none)">
+          <g transform="translate(200,55)">
+            <!-- steam wisps -->
+            <path d="M -10,-30 C -14,-24 -6,-20 -10,-14" fill="none" stroke="rgba(160,120,90,0.55)" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M 0,-32 C -4,-26 4,-22 0,-16" fill="none" stroke="rgba(160,120,90,0.6)" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M 10,-30 C 14,-24 6,-20 10,-14" fill="none" stroke="rgba(160,120,90,0.55)" stroke-width="2.4" stroke-linecap="round"/>
+            <!-- mug body -->
+            <rect x="-22" y="-10" width="44" height="26" rx="4" fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="2"/>
+            <!-- coffee surface -->
+            <ellipse cx="0" cy="-10" rx="22" ry="4" fill="#3a1f0c"/>
+            <!-- handle -->
+            <path d="M 22,-2 Q 36,-2 36,8 Q 36,14 22,12" fill="none" stroke="var(--primary-dark)" stroke-width="3"/>
+            <!-- heart on mug -->
+            <path d="M 0,8 C -4,2 -10,4 -10,8 C -10,12 0,14 0,14 C 0,14 10,12 10,8 C 10,4 4,2 0,8 Z" fill="var(--accent)"/>
+          </g>
+        </g>
+
+        <!-- Dome glass -->
+        <path d="M 70 320 L 70 200 Q 70 80 200 80 Q 330 80 330 200 L 330 320 Z" fill="var(--machine-glass)" stroke="var(--machine-glass-stroke)" stroke-width="6"/>
+
+        <g>
+          <g transform="translate(140,240)">
+            <g class="dome-capsule-1">
+              <circle r="22" fill="url(#capA)"/>
+              <circle r="22" fill="url(#capB)" clip-path="inset(50% 0 0 0)"/>
+              <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+            </g>
+          </g>
+          <g transform="translate(220,200)">
+            <g class="dome-capsule-2">
+              <circle r="22" fill="url(#capB)"/>
+              <circle r="22" fill="url(#capA)" clip-path="inset(50% 0 0 0)"/>
+              <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+            </g>
+          </g>
+          <g transform="translate(170,170)">
+            <g class="dome-capsule-3">
+              <circle r="22" fill="url(#capA)"/>
+              <circle r="22" fill="url(#capB)" clip-path="inset(50% 0 0 0)"/>
+              <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+            </g>
+          </g>
+          <g transform="translate(260,260)">
+            <g class="dome-capsule-4">
+              <circle r="22" fill="url(#capB)"/>
+              <circle r="22" fill="url(#capA)" clip-path="inset(50% 0 0 0)"/>
+              <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+            </g>
+          </g>
+          <g transform="translate(120,290)">
+            <g class="dome-capsule-5">
+              <circle r="22" fill="url(#capA)"/>
+              <circle r="22" fill="url(#capB)" clip-path="inset(50% 0 0 0)"/>
+              <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+            </g>
+          </g>
+        </g>
+
+        <path d="M 70 320 L 70 200 Q 70 80 200 80 Q 330 80 330 200 L 330 320 Z" fill="url(#domeShine)" pointer-events="none"/>
+
+        <rect x="70" y="316" width="260" height="14" fill="var(--machine-body-dark)"/>
+        <rect x="70" y="330" width="260" height="180" rx="6" fill="url(#bodyGrad)"/>
+
+        <rect x="92" y="350" width="160" height="80" rx="8" fill="rgba(0,0,0,0.18)" stroke="var(--machine-glass-stroke)" stroke-width="2"/>
+
+        <g transform="translate(172,390)">
+          <rect x="-50" y="-13" width="100" height="26" rx="3" fill="#0b0d10" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+          <rect x="-49" y="-12" width="98" height="24" rx="2" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+          <text id="machineLabel" x="0" y="5" text-anchor="middle" font-family="'VT323', monospace" font-size="18" fill="var(--primary)" textLength="86" lengthAdjust="spacingAndGlyphs" letter-spacing="1">INSERT COIN</text>
+        </g>
+
+        <rect x="100" y="445" width="40" height="6" rx="2" fill="rgba(0,0,0,0.5)"/>
+        <circle cx="120" cy="465" r="6" fill="rgba(0,0,0,0.4)"/>
+
+        <g class="lever-group" id="leverGroup">
+          <rect x="270" y="384" width="56" height="8" rx="4" fill="#999"/>
+          <circle cx="326" cy="388" r="8" fill="var(--machine-body-dark)"/>
+          <circle cx="270" cy="388" r="14" fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="3"/>
+          <circle cx="266" cy="384" r="4" fill="rgba(255,255,255,0.6)"/>
+        </g>
+
+        <rect x="130" y="470" width="140" height="36" rx="4" fill="var(--tray)"/>
+        <rect x="130" y="470" width="140" height="6" fill="rgba(0,0,0,0.4)"/>
+
+        <g transform="translate(200,430)">
+          <g class="drop-capsule" id="dropCapsule">
+            <circle r="22" fill="url(#capA)"/>
+            <circle r="22" fill="url(#capB)" clip-path="inset(50% 0 0 0)"/>
+            <rect x="-22" y="-2" width="44" height="4" fill="rgba(0,0,0,0.25)"/>
+            <ellipse cx="-7" cy="-8" rx="6" ry="3" fill="rgba(255,255,255,0.55)"/>
+          </g>
+        </g>
+
+        <rect x="60" y="510" width="280" height="20" rx="4" fill="var(--machine-body-dark)"/>
+        <ellipse cx="200" cy="540" rx="140" ry="8" fill="rgba(0,0,0,0.18)"/>
+      </svg>
+    </div>
+
+    <button class="pull-btn" id="pullBtn">
+      <span id="pullBtnText">Pull the Lever ♡</span>
+    </button>
+  </main>
+
+  <div class="gift-counter" id="giftCounter"></div>
+  </div><!-- /lotteryView -->
+
+  <!-- Reveal overlay -->
+  <div class="reveal-overlay" id="revealOverlay" role="dialog" aria-modal="true">
+    <div class="reveal-stage">
+      <div class="capsule-reveal" id="capsuleReveal">
+        <div class="capsule-half capsule-top"></div>
+        <div class="capsule-half capsule-bottom"></div>
+        <div class="capsule-band"></div>
+      </div>
+      <div class="gift-card" id="giftCard">
+        <svg class="corner-deco tl" viewBox="0 0 32 32" fill="currentColor"><path d="M2 2 L14 2 L14 4 L4 4 L4 14 L2 14 Z"/></svg>
+        <svg class="corner-deco tr" viewBox="0 0 32 32" fill="currentColor"><path d="M2 2 L14 2 L14 4 L4 4 L4 14 L2 14 Z"/></svg>
+        <svg class="corner-deco bl" viewBox="0 0 32 32" fill="currentColor"><path d="M2 2 L14 2 L14 4 L4 4 L4 14 L2 14 Z"/></svg>
+        <svg class="corner-deco br" viewBox="0 0 32 32" fill="currentColor"><path d="M2 2 L14 2 L14 4 L4 4 L4 14 L2 14 Z"/></svg>
+        <div class="label">You won</div>
+        <div class="gift-name" id="giftName">—</div>
+          <a class="gift-link-btn" id="giftLinkBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none">
+          <span id="giftLinkLabel">Open</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+        <div class="claim-hint" id="claimHint">Screenshot to claim ♡</div>
+      </div>
+      <div class="dud-card" id="dudCard">
+        <div class="dud-svg-wrap" id="dudSvgWrap"></div>
+        <div class="dud-tagline" id="dudTagline">Empty capsule!</div>
+      </div>
+      <div class="reveal-actions">
+        <button class="small-btn filled" id="againBtn">Pull again</button>
+        <button class="small-btn" id="closeBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin code modal -->
+  <div class="admin-modal" id="adminModal" role="dialog" aria-modal="true">
+    <div class="admin-modal-card">
+      <h3>Enter admin password</h3>
+      <p>Just for the gift-keeper ♡</p>
+      <input type="password" id="adminCodeInput" autocomplete="off" maxlength="60" placeholder="• • • •"/>
+      <div class="admin-modal-actions">
+        <button class="small-btn" id="adminCancel">Cancel</button>
+        <button class="small-btn filled" id="adminSubmit">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session password modal (locked recipient view) -->
+  <div class="admin-modal" id="sessionModal" role="dialog" aria-modal="true">
+    <div class="admin-modal-card">
+      <h3>This lottery is locked</h3>
+      <p>Enter the session password to play ♡</p>
+      <input type="password" id="sessionPwInput" autocomplete="off" maxlength="60" placeholder="• • • •"/>
+      <div class="admin-modal-actions">
+        <button class="small-btn filled" id="sessionSubmit">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gear button (hidden until admin) -->
+  <button class="gear-btn" id="gearBtn" aria-label="Edit gifts">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
+      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+    </svg>
+  </button>
+
+  <!-- Gift management panel -->
+  <aside class="gift-panel" id="giftPanel" aria-label="Manage gifts">
+    <button class="panel-close" id="panelClose" aria-label="Close panel">×</button>
+    <h2>Edit gifts</h2>
+    <p class="panel-sub">Add a name and an optional link. Links open when the gift is revealed.</p>
+    <form class="add-form" id="addForm">
+      <input type="text" id="giftInput" placeholder="Gift name (e.g. Movie night)" maxlength="80" required>
+      <div class="row">
+        <input type="url" id="giftUrlInput" placeholder="Optional link (https://…)" maxlength="500">
+        <button type="submit">Add</button>
+      </div>
+    </form>
+    <div class="form-hint">Tip: link to a Spotify playlist, a Google Maps pin, a YouTube video, anything.</div>
+
+    <ul class="gift-list" id="giftList"></ul>
+
+    <button class="copy-link-btn" id="copyShareLinkBtn">Copy new share link</button>
+
+    <div class="panel-footer">
+      Edits stay local to this browser. Use the button above to send a new link.<br>
+      Lock admin: press <kbd>Esc</kbd> while panel is open, or
+      <br>
+      <button class="lock-btn" id="lockBtn">Lock admin mode</button>
+    </div>
+  </aside>
+
+<script>
+/* ============ INLINE QR CODE GENERATOR ============
+   Byte mode + ECC level M, supports QR versions 1-15.
+   Pure-JS, no external deps. Outputs SVG string.
+   Algorithms from ISO/IEC 18004 (QR spec).
+*/
+window.qrSvg = (() => {
+  // GF(256) tables, primitive poly 0x11D
+  const EXP = new Uint8Array(256), LOG = new Uint8Array(256);
+  (() => { let x=1; for (let i=0;i<255;i++) { EXP[i]=x; LOG[x]=i; x<<=1; if (x & 0x100) x ^= 0x11D; } EXP[255]=EXP[0]; })();
+  const gmul = (a,b) => (a===0||b===0) ? 0 : EXP[(LOG[a]+LOG[b]) % 255];
+  function rsGen(deg) {
+    let p = [1];
+    for (let i=0;i<deg;i++) {
+      const np = new Array(p.length+1).fill(0);
+      for (let j=0;j<p.length;j++) {
+        np[j] ^= p[j];
+        np[j+1] ^= gmul(p[j], EXP[i]);
+      }
+      p = np;
+    }
+    return p;
+  }
+  function rsCompute(data, ecLen) {
+    const gen = rsGen(ecLen);
+    const out = new Array(ecLen).fill(0);
+    for (let k=0;k<data.length;k++) {
+      const factor = data[k] ^ out[0];
+      for (let i=0;i<ecLen-1;i++) out[i] = out[i+1];
+      out[ecLen-1] = 0;
+      if (factor) {
+        for (let i=0;i<ecLen;i++) out[i] ^= gmul(gen[i+1], factor);
+      }
+    }
+    return out;
+  }
+  // ECC level M tables (versions 1-15)
+  // [version] = [ec_per_block, n_blocks_g1, data_per_block_g1, n_blocks_g2, data_per_block_g2]
+  const M_BLOCKS = [null,
+    [10,1,16,0,0],[16,1,28,0,0],[26,1,44,0,0],[18,2,32,0,0],[24,2,43,0,0],
+    [16,4,27,0,0],[18,4,31,0,0],[22,2,38,2,39],[22,3,36,2,37],[26,4,43,1,44],
+    [30,1,50,4,51],[22,6,36,2,37],[22,8,37,1,38],[24,4,40,5,41],[24,5,41,5,42]
+  ];
+  const M_DATA_BYTES = [0,16,28,44,64,86,108,124,154,182,216,254,290,334,365,415];
+  const REMAINDER_BITS = [0, 0,7,7,7,7,7, 0,0,0,0,0,0,0, 3,3];
+  const ALIGNMENT = [null,null,
+    [6,18],[6,22],[6,26],[6,30],[6,34],
+    [6,22,38],[6,24,42],[6,26,46],[6,28,50],
+    [6,30,54],[6,32,58],[6,34,62],
+    [6,26,46,66],[6,26,48,70]
+  ];
+  // Format info bits (ECC level M = 00, masks 0..7) per QR spec table C.1
+  const FORMAT_M = [0x5412,0x5125,0x5E7C,0x5B4B,0x45F9,0x40CE,0x4F97,0x4AA0];
+  // Version info bits (versions 7-15) per QR spec table D.1
+  const VERSION_INFO = [null,null,null,null,null,null,null,
+    0x07C94,0x085BC,0x09A99,0x0A4D3,0x0BBF6,0x0C762,0x0D847,0x0E60D,0x0F928
+  ];
+  const MASKS = [
+    (r,c)=>(r+c)%2===0,
+    (r,c)=>r%2===0,
+    (r,c)=>c%3===0,
+    (r,c)=>(r+c)%3===0,
+    (r,c)=>(((r/2)|0)+((c/3)|0))%2===0,
+    (r,c)=>((r*c)%2)+((r*c)%3)===0,
+    (r,c)=>(((r*c)%2)+((r*c)%3))%2===0,
+    (r,c)=>(((r+c)%2)+((r*c)%3))%2===0
+  ];
+  function pickVersion(byteLen) {
+    for (let v=1; v<=15; v++) {
+      const ccBits = v < 10 ? 8 : 16;
+      const required = 4 + ccBits + byteLen*8;
+      if (required <= M_DATA_BYTES[v]*8) return v;
+    }
+    return -1;
+  }
+  function buildBitStream(text, v) {
+    const utf8 = new TextEncoder().encode(text);
+    const ccBits = v < 10 ? 8 : 16;
+    const totalBits = M_DATA_BYTES[v] * 8;
+    const bits = [];
+    function put(value, len) { for (let i=len-1;i>=0;i--) bits.push((value >> i) & 1); }
+    put(0b0100, 4);
+    put(utf8.length, ccBits);
+    for (const b of utf8) put(b, 8);
+    // terminator
+    const term = Math.min(4, totalBits - bits.length);
+    for (let i=0;i<term;i++) bits.push(0);
+    while (bits.length % 8 !== 0) bits.push(0);
+    // pack to bytes
+    const bytes = [];
+    for (let i=0; i<bits.length; i+=8) {
+      let b=0; for (let j=0;j<8;j++) b = (b<<1) | bits[i+j];
+      bytes.push(b);
+    }
+    let pad = 0xEC;
+    while (bytes.length < M_DATA_BYTES[v]) {
+      bytes.push(pad);
+      pad = pad === 0xEC ? 0x11 : 0xEC;
+    }
+    return bytes;
+  }
+  function interleave(data, v) {
+    const [ecLen, n1, sz1, n2, sz2] = M_BLOCKS[v];
+    const blocks = [];
+    let off = 0;
+    for (let i=0;i<n1;i++) { const d = data.slice(off, off+sz1); off += sz1; blocks.push({d, e: rsCompute(d, ecLen)}); }
+    for (let i=0;i<n2;i++) { const d = data.slice(off, off+sz2); off += sz2; blocks.push({d, e: rsCompute(d, ecLen)}); }
+    const maxData = Math.max(...blocks.map(b => b.d.length));
+    const out = [];
+    for (let i=0;i<maxData;i++) for (const b of blocks) if (i < b.d.length) out.push(b.d[i]);
+    for (let i=0;i<ecLen;i++) for (const b of blocks) out.push(b.e[i]);
+    return out;
+  }
+  function placeFinder(m, r, x, y) {
+    for (let dy=-1; dy<=7; dy++) for (let dx=-1; dx<=7; dx++) {
+      const px=x+dx, py=y+dy;
+      if (px<0||py<0||px>=m.length||py>=m.length) continue;
+      r[py][px] = 1;
+      const inOuter = (dx>=0&&dx<=6&&(dy===0||dy===6)) || (dy>=0&&dy<=6&&(dx===0||dx===6));
+      const inInner = dx>=2&&dx<=4&&dy>=2&&dy<=4;
+      m[py][px] = (inOuter||inInner) ? 1 : 0;
+    }
+  }
+  function buildMatrix(cw, v) {
+    const size = 17 + 4*v;
+    const m = []; const r = [];
+    for (let i=0;i<size;i++) { m.push(new Int8Array(size)); r.push(new Int8Array(size)); }
+    placeFinder(m, r, 0, 0);
+    placeFinder(m, r, size-7, 0);
+    placeFinder(m, r, 0, size-7);
+    // timing
+    for (let i=8;i<size-8;i++) { m[6][i] = (i%2===0)?1:0; m[i][6] = (i%2===0)?1:0; r[6][i]=1; r[i][6]=1; }
+    // dark module
+    m[size-8][8] = 1; r[size-8][8] = 1;
+    // format info reservation
+    for (let i=0;i<9;i++) { r[8][i]=1; r[i][8]=1; }
+    for (let i=0;i<8;i++) { r[8][size-1-i]=1; r[size-1-i][8]=1; }
+    // alignment patterns (skip those that overlap finder areas; OK to overlap timing)
+    if (v >= 2) {
+      const pos = ALIGNMENT[v];
+      for (const ax of pos) for (const ay of pos) {
+        if ((ax < 8 && ay < 8) || (ax >= size-8 && ay < 8) || (ax < 8 && ay >= size-8)) continue;
+        for (let dy=-2; dy<=2; dy++) for (let dx=-2; dx<=2; dx++) {
+          const px=ax+dx, py=ay+dy;
+          const md = Math.max(Math.abs(dx), Math.abs(dy));
+          m[py][px] = (md===0||md===2) ? 1 : 0;
+          r[py][px] = 1;
+        }
+      }
+    }
+    // version info reservation
+    if (v >= 7) {
+      for (let i=0;i<6;i++) for (let j=size-11;j<=size-9;j++) { r[i][j]=1; r[j][i]=1; }
+    }
+    // place data + remainder bits
+    let bitIdx = 0;
+    const totalBits = cw.length*8 + REMAINDER_BITS[v];
+    for (let col = size-1; col >= 1; col -= 2) {
+      if (col === 6) col--;
+      for (let dy=0; dy<size; dy++) {
+        const goingUp = ((size-1-col) & 2) === 0;
+        const y = goingUp ? size-1-dy : dy;
+        for (let dxOff=0; dxOff<2; dxOff++) {
+          const x = col - dxOff;
+          if (r[y][x]) continue;
+          if (bitIdx < totalBits) {
+            const bIdx = bitIdx >> 3;
+            const bit = bIdx < cw.length ? ((cw[bIdx] >> (7 - (bitIdx & 7))) & 1) : 0;
+            m[y][x] = bit;
+          } else {
+            m[y][x] = 0;
+          }
+          bitIdx++;
+        }
+      }
+    }
+    return { m, r, size };
+  }
+  function applyMask(m, r, size, idx) {
+    const fn = MASKS[idx];
+    const out = m.map(row => Int8Array.from(row));
+    for (let y=0;y<size;y++) for (let x=0;x<size;x++) {
+      if (!r[y][x] && fn(y,x)) out[y][x] ^= 1;
+    }
+    return out;
+  }
+  function placeFormat(m, size, mask) {
+    const bits = FORMAT_M[mask];
+    for (let i=0;i<15;i++) {
+      const b = (bits >> i) & 1;
+      // copy 1: bit 0 (LSB) at column 8 top, bit 14 (MSB) at row 8 left
+      if (i<6) m[i][8] = b;
+      else if (i===6) m[7][8] = b;
+      else if (i===7) m[8][8] = b;
+      else if (i===8) m[8][7] = b;
+      else m[8][14-i] = b;
+      // copy 2: bit 0 (LSB) at row 8 right, bit 14 (MSB) at column 8 bottom
+      if (i<8) m[8][size-1-i] = b;
+      else m[size-15+i][8] = b;
+    }
+  }
+  function placeVersion(m, size, v) {
+    if (v < 7) return;
+    const bits = VERSION_INFO[v];
+    for (let i=0;i<18;i++) {
+      const b = (bits >> i) & 1;
+      const a = Math.floor(i/3), c = i%3;
+      m[size-11+c][a] = b;
+      m[a][size-11+c] = b;
+    }
+  }
+  function penalty(m, size) {
+    let p = 0;
+    // rule 1
+    for (let dim=0; dim<2; dim++) {
+      for (let i=0; i<size; i++) {
+        let prev=-1, run=0;
+        for (let j=0; j<size; j++) {
+          const v = dim===0 ? m[i][j] : m[j][i];
+          if (v === prev) {
+            run++;
+            if (run === 5) p += 3;
+            else if (run > 5) p += 1;
+          } else { prev=v; run=1; }
+        }
+      }
+    }
+    // rule 2
+    for (let y=0;y<size-1;y++) for (let x=0;x<size-1;x++) {
+      const v = m[y][x];
+      if (m[y][x+1]===v && m[y+1][x]===v && m[y+1][x+1]===v) p += 3;
+    }
+    // rule 3
+    const pat = [1,0,1,1,1,0,1];
+    for (let dim=0; dim<2; dim++) {
+      for (let i=0; i<size; i++) {
+        for (let j=0; j<=size-7; j++) {
+          let match = true;
+          for (let k=0; k<7; k++) {
+            const v = dim===0 ? m[i][j+k] : m[j+k][i];
+            if (v !== pat[k]) { match = false; break; }
+          }
+          if (!match) continue;
+          if (j+7+4 <= size) {
+            let allLight = true;
+            for (let k=0;k<4;k++) {
+              const v = dim===0 ? m[i][j+7+k] : m[j+7+k][i];
+              if (v !== 0) { allLight = false; break; }
+            }
+            if (allLight) p += 40;
+          }
+          if (j-4 >= 0) {
+            let allLight = true;
+            for (let k=1;k<=4;k++) {
+              const v = dim===0 ? m[i][j-k] : m[j-k][i];
+              if (v !== 0) { allLight = false; break; }
+            }
+            if (allLight) p += 40;
+          }
+        }
+      }
+    }
+    // rule 4
+    let dark = 0;
+    for (let y=0;y<size;y++) for (let x=0;x<size;x++) if (m[y][x]) dark++;
+    const total = size*size;
+    const deviation = Math.abs(dark*100/total - 50);
+    p += Math.floor(deviation / 5) * 10;
+    return p;
+  }
+  return function qrSvg(text) {
+    const utf8len = new TextEncoder().encode(text).length;
+    const v = pickVersion(utf8len);
+    if (v < 0) throw new Error("data too long for QR v1-15");
+    const data = buildBitStream(text, v);
+    const codewords = interleave(data, v);
+    const built = buildMatrix(codewords, v);
+    let bestMask = 0, bestPenalty = Infinity, bestM = null;
+    for (let mi=0; mi<8; mi++) {
+      const masked = applyMask(built.m, built.r, built.size, mi);
+      placeFormat(masked, built.size, mi);
+      placeVersion(masked, built.size, v);
+      const p = penalty(masked, built.size);
+      if (p < bestPenalty) { bestPenalty = p; bestMask = mi; bestM = masked; }
+    }
+    const cell = 4, margin = 4;
+    const dim = built.size * cell + 2*margin;
+    let path = "";
+    for (let y=0; y<built.size; y++) {
+      for (let x=0; x<built.size; x++) {
+        if (bestM[y][x]) {
+          path += `M${margin+x*cell},${margin+y*cell}h${cell}v${cell}h-${cell}z`;
+        }
+      }
+    }
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${dim} ${dim}" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid meet" width="200" height="200"><rect width="${dim}" height="${dim}" fill="#ffffff"/><path d="${path}" fill="#000000"/></svg>`;
+  };
+})();
+
+(() => {
+"use strict";
+
+  /* ============ CONSTANTS ============ */
+  const SECRET_TAPS = 5;
+  const SECRET_TAP_WINDOW = 3000;
+  const PBKDF2_ITERATIONS = 100000;
+  const FRAGMENT_PREFIX = "#c=";
+  const DEFAULT_DUD_CHANCE = 0.2;
+
+  const DEFAULT_GIFTS = [
+    { name: "A handwritten love letter" },
+    { name: "Breakfast in bed, your pick" },
+    { name: "Movie night, you choose the film" },
+    { name: "Dinner at your favorite spot" },
+    { name: "A custom playlist made just for you", url: "https://open.spotify.com/" },
+    { name: "Stargazing date under the blankets" },
+    { name: "One day of zero chores — I've got it" },
+    { name: "Surprise dessert delivery" }
+  ];
+
+  const THEME_ORDER = ["sanrio","beach","cosy","arcade"];
+
+  const themeContent = {
+    sanrio: { eyebrow: "Happy Birthday Lottery", title: "A Little Surprise For You ♡", pull: "Pull the Lever ♡", floaters: ["heart","heart","star","heart"] },
+    beach:  { eyebrow: "Seaside Birthday Stand", title: "A Little Treasure From the Tide", pull: "Pull the Wave",   floaters: ["shell","palm","wave","sun"] },
+    cosy:   { eyebrow: "a cosy little lottery",  title: "warm up a wish",                pull: "give it a tug",    floaters: ["mug","candle","yarn","leaf"] },
+    arcade: { eyebrow: "PRESS START",            title: "INSERT COIN ▸ WIN PRIZE",       pull: "[ PULL LEVER ]",   floaters: ["pixel","pixel","star","pixel"] }
+  };
+
+  const themeNames = { sanrio: "Sanrio", beach: "Beach", cosy: "Cosy", arcade: "Arcade" };
+  const themeSwatches = {
+    sanrio: ["#ff5d8f","#ffd84d"],
+    beach:  ["#ff7a6c","#ffd35c"],
+    cosy:   ["#c47a3d","#a13a4f"],
+    arcade: ["#00ffea","#ff2bd6"]
+  };
+
+  const claimHints = {
+    sanrio: "Screenshot to claim ♡",
+    beach:  "Snap it to keep it 🐚",
+    cosy:   "save this little moment",
+    arcade: "[ SCREEN.CAP TO CLAIM ]"
+  };
+
+  const counterTemplates = {
+    sanrio: n => n === 1 ? "1 capsule left in this round" : `${n} capsules left in this round`,
+    beach:  n => n === 1 ? "1 capsule left in the tide" : `${n} capsules left in the tide`,
+    cosy:   n => n === 1 ? "one wish left in this round" : `${n} wishes left in this round`,
+    arcade: n => `[ ${n} CAPSULE${n===1?"":"S"} LEFT ]`
+  };
+
+  const roundCompleteTexts = {
+    sanrio: "all the surprises peeked ♡ pull to play again",
+    beach:  "the tide rolled out — pull to play again",
+    cosy:   "every little wish unwrapped — pull to play again",
+    arcade: "[ STAGE CLEAR · PULL TO PLAY AGAIN ]"
+  };
+
+  const nextUnlockTexts = {
+    sanrio: d => `next surprise unlocks ${d} ♡`,
+    beach:  d => `next treasure surfaces ${d}`,
+    cosy:   d => `next little wish unlocks ${d}`,
+    arcade: d => `[ NEXT DROP: ${d.toUpperCase()} ]`
+  };
+
+  const playAgainLabels = {
+    sanrio: "Play again ♡",
+    beach:  "Play again",
+    cosy:   "play again",
+    arcade: "[ PLAY AGAIN ]"
+  };
+
+  function todayIso() { return new Date().toISOString().slice(0, 10); }
+  function maxLockIso() {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 2);
+    return d.toISOString().slice(0, 10);
+  }
+  function isUnlocked(gift) {
+    if (!gift || !gift.unlockOn) return true;
+    return gift.unlockOn <= todayIso();
+  }
+  function nextUnlockDate() {
+    const today = todayIso();
+    let next = null;
+    for (const g of runtime.gifts) {
+      if (g && g.unlockOn && g.unlockOn > today) {
+        if (!next || g.unlockOn < next) next = g.unlockOn;
+      }
+    }
+    return next;
+  }
+  function formatUnlockDate(iso) {
+    try {
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+    } catch(e) { return iso; }
+  }
+
+  const jackpotLabels = {
+    sanrio: "★ JACKPOT ★",
+    beach:  "★ TREASURE ★",
+    cosy:   "★ a special one ★",
+    arcade: "★ JACKPOT ★"
+  };
+
+  function machineLabelText(n) {
+    if (n <= 0) return "INSERT COIN";
+    if (n === 1) return "1 CREDIT";
+    return `${n} CREDITS`;
+  }
+
+  const dudVariants = ["empty","fish","note","balloon"];
+  const dudTaglines = {
+    sanrio: { empty: "Empty capsule!", fish: "Just a goldfish… ♡", note: "Try again!", balloon: "Aw, almost!" },
+    beach:  { empty: "Just sand…",      fish: "It's a fish!",       note: "Wave it off",  balloon: "Drifted away…" },
+    cosy:   { empty: "all empty…",      fish: "a tiny minnow!",     note: "another time?", balloon: "softly fizzled" },
+    arcade: { empty: "[ EMPTY ]",       fish: "[ FISH.GLITCH ]",    note: "[ TRY AGAIN ]", balloon: "[ DEFLATED ]" }
+  };
+
+  const floaterSvgs = {
+    heart: '<svg width="44" height="44" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/></svg>',
+    star: '<svg width="38" height="38" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg>',
+    pixel: '<svg width="40" height="40" viewBox="0 0 16 16" fill="var(--primary)" style="filter:drop-shadow(0 0 6px var(--primary-glow))"><rect x="6" y="2" width="4" height="2"/><rect x="4" y="4" width="8" height="2"/><rect x="2" y="6" width="12" height="4"/><rect x="4" y="10" width="8" height="2"/><rect x="6" y="12" width="4" height="2"/></svg>',
+    shell: '<svg width="38" height="38" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 3C7 3 4 7 4 12c0 4 3 7 8 9 5-2 8-5 8-9 0-5-3-9-8-9zm0 3c1.5 0 2.6 1 2.6 2.5-.9 0-1.7.1-2.6.6-.9-.5-1.7-.6-2.6-.6 0-1.5 1.1-2.5 2.6-2.5z"/><path d="M12 9c-3 1-4 3-4 6s2 5 4 6c2-1 4-3 4-6s-1-5-4-6z" fill="var(--accent)" opacity="0.5"/></svg>',
+    palm: '<svg width="44" height="44" viewBox="0 0 24 24"><path d="M12 22V11" stroke="#8a5a32" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M12 11C9 9 5 8 3 9c1-3 5-5 9-2zM12 11c3-2 7-3 9-2-1-3-5-5-9-2zM12 11c-3 0-7 2-8 5 4 1 8-1 8-5zM12 11c3 0 7 2 8 5-4 1-8-1-8-5z" fill="#5fa370"/></svg>',
+    wave: '<svg width="46" height="22" viewBox="0 0 46 22" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"><path d="M2 11 Q 8 2 15 11 T 28 11 T 42 11"/></svg>',
+    sun: '<svg width="38" height="38" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="var(--accent)"/><g stroke="var(--accent)" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="5" y1="5" x2="7" y2="7"/><line x1="17" y1="17" x2="19" y2="19"/><line x1="5" y1="19" x2="7" y2="17"/><line x1="17" y1="7" x2="19" y2="5"/></g></svg>',
+    mug: '<svg width="40" height="40" viewBox="0 0 24 24"><rect x="5" y="9" width="11" height="11" rx="2" fill="var(--primary)" stroke="var(--primary-dark)" stroke-width="1.2"/><path d="M16 12 C 19 12 19 18 16 18" stroke="var(--primary-dark)" stroke-width="2" fill="none"/><path d="M8 7 C 8 4 10 4 10 7 M12 7 C 12 4 14 4 14 7" stroke="rgba(160,120,90,0.55)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>',
+    candle: '<svg width="34" height="42" viewBox="0 0 24 28"><rect x="9" y="11" width="6" height="15" rx="1" fill="#f3d090" stroke="var(--primary-dark)" stroke-width="0.8"/><line x1="12" y1="11" x2="12" y2="8" stroke="#3a2418" stroke-width="1"/><path d="M12 8 C 9 6 11 3 12 1 C 13 3 15 6 12 8 Z" fill="var(--accent)"/></svg>',
+    yarn: '<svg width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="var(--accent)"/><path d="M3 12 Q 12 6 21 12 M4 14 Q 12 9 20 14 M4 10 Q 12 4 20 10 M6 17 Q 12 12 18 17 M6 7 Q 12 3 18 7" stroke="var(--primary-dark)" stroke-width="0.7" fill="none" opacity="0.45"/></svg>',
+    leaf: '<svg width="44" height="44" viewBox="0 0 24 24" fill="var(--primary)"><path d="M5 19c8-1 13-6 14-14-8 1-13 6-14 14zm0 0c1-3 3-5 6-7"/></svg>'
+  };
+
+  /* ============ STORAGE ============ */
+  const DRAFT_KEY = "birthday-gacha-setup-draft-v1";
+  const THEME_KEY = "birthday-gacha-theme-v1";
+  const LEGACY_GIFTS_KEY = "birthday-gacha-gifts-v2";
+
+  function loadStoredTheme() {
+    try { return localStorage.getItem(THEME_KEY) || "sanrio"; } catch(e) { return "sanrio"; }
+  }
+  function saveTheme(t) {
+    try { localStorage.setItem(THEME_KEY, t); } catch(e) {}
+  }
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    try {
+      const old = localStorage.getItem(LEGACY_GIFTS_KEY);
+      if (old) {
+        const gifts = JSON.parse(old).map(g => typeof g === "string" ? { name: g } : g);
+        if (gifts.length) return { gifts, theme: loadStoredTheme(), dudChance: DEFAULT_DUD_CHANCE, adminPw: "", sessionPw: "" };
+      }
+    } catch(e) {}
+    return null;
+  }
+  function saveDraft(d) {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); } catch(e) {}
+  }
+
+  function roundKey(configHash) { return `birthday-gacha-round-${configHash.slice(0,12)}`; }
+  function loadStoredRound(configHash) {
+    try {
+      const raw = localStorage.getItem(roundKey(configHash));
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    return null;
+  }
+  function saveStoredRound(configHash, round) {
+    try { localStorage.setItem(roundKey(configHash), JSON.stringify(round)); } catch(e) {}
+  }
+
+  /* ============ CRYPTO / ENCODING ============ */
+  const enc = new TextEncoder();
+  const dec = new TextDecoder();
+
+  async function sha256Hex(text) {
+    const buf = await crypto.subtle.digest("SHA-256", enc.encode(text));
+    return Array.from(new Uint8Array(buf), b => b.toString(16).padStart(2,"0")).join("");
+  }
+  function b64uEncode(bytes) {
+    let s = "";
+    for (let i=0;i<bytes.length;i++) s += String.fromCharCode(bytes[i]);
+    return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function b64uDecode(str) {
+    let s = str.replace(/-/g,"+").replace(/_/g,"/");
+    while (s.length % 4) s += "=";
+    const bin = atob(s);
+    const bytes = new Uint8Array(bin.length);
+    for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+  async function deriveKey(password, salt) {
+    const baseKey = await crypto.subtle.importKey(
+      "raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]
+    );
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+      baseKey,
+      { name: "AES-GCM", length: 256 },
+      false, ["encrypt","decrypt"]
+    );
+  }
+  async function encryptJSON(obj, password) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt);
+    const data = enc.encode(JSON.stringify(obj));
+    const ct = new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM", iv}, key, data));
+    const out = new Uint8Array(salt.length + iv.length + ct.length);
+    out.set(salt, 0); out.set(iv, 16); out.set(ct, 28);
+    return out;
+  }
+  async function decryptJSON(bytes, password) {
+    if (bytes.length < 28) throw new Error("malformed");
+    const salt = bytes.slice(0, 16);
+    const iv = bytes.slice(16, 28);
+    const ct = bytes.slice(28);
+    const key = await deriveKey(password, salt);
+    const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv}, key, ct);
+    return JSON.parse(dec.decode(pt));
+  }
+  async function encodeConfig(config, sessionPw) {
+    if (sessionPw) {
+      const bytes = await encryptJSON(config, sessionPw);
+      return "e:" + b64uEncode(bytes);
+    }
+    const bytes = enc.encode(JSON.stringify(config));
+    return "p:" + b64uEncode(bytes);
+  }
+  async function decodeConfig(payload, sessionPw) {
+    const idx = payload.indexOf(":");
+    if (idx < 0) throw new Error("malformed");
+    const tag = payload.slice(0, idx);
+    const body = payload.slice(idx + 1);
+    const bytes = b64uDecode(body);
+    if (tag === "p") return JSON.parse(dec.decode(bytes));
+    if (tag === "e") {
+      if (!sessionPw) { const e = new Error("encrypted"); e.code = "encrypted"; throw e; }
+      return await decryptJSON(bytes, sessionPw);
+    }
+    throw new Error("unknown tag");
+  }
+  function buildShareUrl(payload) {
+    return window.location.origin + window.location.pathname + FRAGMENT_PREFIX + payload;
+  }
+
+  /* ============ DOM ============ */
+  const $ = sel => document.querySelector(sel);
+  const els = {
+    body: document.body,
+    setupView: $("#setupView"),
+    shareView: $("#shareView"),
+    lotteryView: $("#lotteryView"),
+    machineWrap: $("#machineWrap"),
+    leverGroup: $("#leverGroup"),
+    dropCapsule: $("#dropCapsule"),
+    pullBtn: $("#pullBtn"),
+    pullBtnText: $("#pullBtnText"),
+    overlay: $("#revealOverlay"),
+    capsuleReveal: $("#capsuleReveal"),
+    giftCard: $("#giftCard"),
+    giftNameEl: $("#giftName"),
+    giftLinkBtn: $("#giftLinkBtn"),
+    giftLinkLabel: $("#giftLinkLabel"),
+    claimHint: $("#claimHint"),
+    dudCard: $("#dudCard"),
+    dudSvgWrap: $("#dudSvgWrap"),
+    dudTagline: $("#dudTagline"),
+    againBtn: $("#againBtn"),
+    closeBtn: $("#closeBtn"),
+    gearBtn: $("#gearBtn"),
+    panel: $("#giftPanel"),
+    panelClose: $("#panelClose"),
+    lockBtn: $("#lockBtn"),
+    addForm: $("#addForm"),
+    giftInput: $("#giftInput"),
+    giftUrlInput: $("#giftUrlInput"),
+    giftListEl: $("#giftList"),
+    copyShareLinkBtn: $("#copyShareLinkBtn"),
+    eyebrow: $("#eyebrow"),
+    title: $("#title"),
+    themeTrigger: $("#themeTrigger"),
+    themeMenu: $("#themeMenu"),
+    adminModal: $("#adminModal"),
+    adminCodeInput: $("#adminCodeInput"),
+    adminSubmit: $("#adminSubmit"),
+    adminCancel: $("#adminCancel"),
+    sessionModal: $("#sessionModal"),
+    sessionPwInput: $("#sessionPwInput"),
+    sessionSubmit: $("#sessionSubmit"),
+    giftCounter: $("#giftCounter"),
+    setupAdminPw: $("#setupAdminPw"),
+    setupSessionPw: $("#setupSessionPw"),
+    themeGrid: $("#themeGrid"),
+    dudSlider: $("#dudSlider"),
+    dudPct: $("#dudPct"),
+    dudHelp: $("#dudHelp"),
+    setupAddForm: $("#setupAddForm"),
+    setupGiftInput: $("#setupGiftInput"),
+    setupGiftUrlInput: $("#setupGiftUrlInput"),
+    setupGiftList: $("#setupGiftList"),
+    generateBtn: $("#generateBtn"),
+    shareUrlInput: $("#shareUrlInput"),
+    copyUrlBtn: $("#copyUrlBtn"),
+    qrFrame: $("#qrFrame"),
+    previewBtn: $("#previewBtn"),
+    editSetupBtn: $("#editSetupBtn")
+  };
+
+  /* ============ RUNTIME STATE ============ */
+  const runtime = {
+    mode: null,             // "setup" | "share" | "lottery" | "locked"
+    config: null,
+    payload: null,
+    configHash: null,
+    sessionPw: null,        // kept in memory after unlock for re-share
+    gifts: [],
+    dudChance: 0,
+    theme: loadStoredTheme(),
+    isAdmin: false,
+    isSpinning: false,
+    round: { queue: [], index: 0, total: 0 },
+    setupDraft: null
+  };
+
+  function setMode(mode) {
+    runtime.mode = mode;
+    els.body.classList.remove("is-setup","is-share","is-lottery","is-locked");
+    els.body.classList.add(`is-${mode}`);
+    if (mode === "lottery") {
+      const c = themeContent[runtime.theme];
+      els.eyebrow.textContent = c.eyebrow;
+      els.title.textContent = c.title;
+      els.pullBtnText.textContent = c.pull;
+    }
+  }
+
+  /* ============ THEME ============ */
+  function applyTheme(theme) {
+    if (!THEME_ORDER.includes(theme)) theme = "sanrio";
+    runtime.theme = theme;
+    document.documentElement.setAttribute("data-theme", theme);
+    THEME_ORDER.forEach(t => {
+      document.documentElement.style.setProperty(`--show-${t}`, t === theme ? "block" : "none");
+    });
+    els.themeMenu.querySelectorAll("button").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.setTheme === theme);
+    });
+    const c = themeContent[theme];
+    if (runtime.mode === "lottery" || runtime.mode === null) {
+      els.eyebrow.textContent = c.eyebrow;
+      els.title.textContent = c.title;
+      els.pullBtnText.textContent = c.pull;
+    }
+    for (let i=0;i<4;i++) {
+      const fEl = document.getElementById(`floater${i+1}`);
+      fEl.innerHTML = floaterSvgs[c.floaters[i]] || "";
+    }
+    if (els.claimHint) els.claimHint.textContent = claimHints[theme] || claimHints.sanrio;
+    updateMachineLabel();
+    updateGiftCounter();
+    updateThemeGridSelection();
+    saveTheme(theme);
+  }
+
+  els.themeTrigger.addEventListener("click", e => {
+    e.stopPropagation();
+    els.themeMenu.classList.toggle("open");
+  });
+  els.themeMenu.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyTheme(btn.dataset.setTheme);
+      els.themeMenu.classList.remove("open");
+      if (runtime.mode === "setup") saveCurrentDraft();
+    });
+  });
+  document.addEventListener("click", e => {
+    if (!els.themeMenu.contains(e.target) && e.target !== els.themeTrigger && !els.themeTrigger.contains(e.target)) {
+      els.themeMenu.classList.remove("open");
+    }
+  });
+
+  /* ============ SETUP WIZARD ============ */
+  function renderThemeGrid() {
+    els.themeGrid.innerHTML = "";
+    THEME_ORDER.forEach(t => {
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "theme-tile";
+      tile.dataset.theme = t;
+      const [a, b] = themeSwatches[t];
+      tile.innerHTML = `<span class="swatch-pair"><span style="background:${a}"></span><span style="background:${b}"></span></span><span>${themeNames[t]}</span>`;
+      tile.addEventListener("click", () => {
+        applyTheme(t);
+        saveCurrentDraft();
+      });
+      els.themeGrid.appendChild(tile);
+    });
+    updateThemeGridSelection();
+  }
+  function updateThemeGridSelection() {
+    if (!els.themeGrid) return;
+    els.themeGrid.querySelectorAll(".theme-tile").forEach(tile => {
+      tile.classList.toggle("selected", tile.dataset.theme === runtime.theme);
+    });
+  }
+
+  function updateDudHint() {
+    const pct = parseInt(els.dudSlider.value, 10);
+    els.dudPct.textContent = `${pct}%`;
+    if (pct === 0) {
+      els.dudHelp.textContent = "Every pull is a guaranteed gift.";
+    } else {
+      const oneIn = Math.round(100 / pct);
+      els.dudHelp.textContent = `Roughly 1 pull in ${oneIn} comes up empty.`;
+    }
+  }
+  els.dudSlider.addEventListener("input", () => { updateDudHint(); saveCurrentDraft(); });
+
+  function renderSetupGifts() {
+    const list = els.setupGiftList;
+    list.innerHTML = "";
+    if (!runtime.setupDraft.gifts.length) {
+      const li = document.createElement("li");
+      li.style.justifyContent = "center";
+      li.style.color = "var(--text-soft)";
+      li.textContent = "Add at least one gift before sharing.";
+      list.appendChild(li);
+      return;
+    }
+    runtime.setupDraft.gifts.forEach((g, i) => {
+      const li = document.createElement("li");
+      const info = document.createElement("div");
+      info.className = "gift-info";
+      const text = document.createElement("div");
+      text.className = "gift-text";
+      text.textContent = g.name;
+      info.appendChild(text);
+      if (g.url) {
+        const url = document.createElement("a");
+        url.className = "gift-url";
+        url.href = g.url;
+        url.target = "_blank";
+        url.rel = "noopener noreferrer";
+        url.textContent = g.url;
+        info.appendChild(url);
+      }
+      if (g.unlockOn) {
+        const lk = document.createElement("span");
+        lk.className = "gift-lock-indicator";
+        const today = todayIso();
+        lk.textContent = (g.unlockOn > today ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn);
+        info.appendChild(lk);
+      }
+      const dateInput = document.createElement("input");
+      dateInput.type = "date";
+      dateInput.className = "gift-date" + (g.unlockOn ? " set" : "");
+      dateInput.value = g.unlockOn || "";
+      dateInput.min = todayIso();
+      dateInput.max = maxLockIso();
+      dateInput.title = "Lock this gift until a date";
+      dateInput.addEventListener("change", () => {
+        g.unlockOn = dateInput.value || undefined;
+        if (!g.unlockOn) delete g.unlockOn;
+        saveCurrentDraft();
+        renderSetupGifts();
+      });
+      const star = document.createElement("button");
+      star.type = "button";
+      star.className = "shiny-toggle" + (g.shiny ? " on" : "");
+      star.innerHTML = g.shiny ? "★" : "☆";
+      star.title = g.shiny ? "Special prize — click to make normal" : "Mark as a special prize (glows in the dome)";
+      star.addEventListener("click", () => {
+        g.shiny = !g.shiny;
+        saveCurrentDraft();
+        renderSetupGifts();
+      });
+      const btn = document.createElement("button");
+      btn.innerHTML = "×";
+      btn.title = "Remove";
+      btn.addEventListener("click", () => {
+        runtime.setupDraft.gifts.splice(i, 1);
+        saveCurrentDraft();
+        renderSetupGifts();
+      });
+      li.appendChild(info);
+      li.appendChild(dateInput);
+      li.appendChild(star);
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+  }
+
+  els.setupAddForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = els.setupGiftInput.value.trim();
+    const url = els.setupGiftUrlInput.value.trim();
+    if (!name) return;
+    const entry = { name };
+    if (url) entry.url = url;
+    runtime.setupDraft.gifts.push(entry);
+    saveCurrentDraft();
+    els.setupGiftInput.value = "";
+    els.setupGiftUrlInput.value = "";
+    renderSetupGifts();
+    els.setupGiftInput.focus();
+  });
+
+  els.setupAdminPw.addEventListener("input", () => {
+    if (!runtime.setupDraft) return;
+    runtime.setupDraft.adminPw = els.setupAdminPw.value;
+    saveCurrentDraft();
+  });
+  els.setupSessionPw.addEventListener("input", () => {
+    if (!runtime.setupDraft) return;
+    runtime.setupDraft.sessionPw = els.setupSessionPw.value;
+    saveCurrentDraft();
+  });
+
+  function loadFromDraft(d) {
+    runtime.setupDraft = {
+      adminPw: d.adminPw || "",
+      sessionPw: d.sessionPw || "",
+      theme: THEME_ORDER.includes(d.theme) ? d.theme : "sanrio",
+      dudChance: typeof d.dudChance === "number" ? d.dudChance : DEFAULT_DUD_CHANCE,
+      gifts: Array.isArray(d.gifts) && d.gifts.length ? d.gifts.map(g => ({ ...g })) : DEFAULT_GIFTS.map(g => ({ ...g }))
+    };
+    els.setupAdminPw.value = runtime.setupDraft.adminPw;
+    els.setupSessionPw.value = runtime.setupDraft.sessionPw;
+    els.dudSlider.value = String(Math.round(runtime.setupDraft.dudChance * 100));
+    runtime.theme = runtime.setupDraft.theme;
+  }
+
+  function saveCurrentDraft() {
+    if (runtime.mode !== "setup" || !runtime.setupDraft) return;
+    runtime.setupDraft.theme = runtime.theme;
+    runtime.setupDraft.dudChance = parseInt(els.dudSlider.value, 10) / 100;
+    saveDraft(runtime.setupDraft);
+  }
+
+  function startNewSetup() {
+    runtime.setupDraft = {
+      adminPw: "",
+      sessionPw: "",
+      theme: runtime.theme,
+      dudChance: DEFAULT_DUD_CHANCE,
+      gifts: DEFAULT_GIFTS.map(g => ({ ...g }))
+    };
+    els.setupAdminPw.value = "";
+    els.setupSessionPw.value = "";
+    els.dudSlider.value = String(Math.round(DEFAULT_DUD_CHANCE * 100));
+  }
+
+  function showSetup() {
+    setMode("setup");
+    if (!runtime.setupDraft) startNewSetup();
+    renderThemeGrid();
+    updateDudHint();
+    renderSetupGifts();
+  }
+
+  els.generateBtn.addEventListener("click", async () => {
+    const adminPw = els.setupAdminPw.value.trim();
+    if (!adminPw) {
+      els.setupAdminPw.classList.remove("error");
+      void els.setupAdminPw.offsetWidth;
+      els.setupAdminPw.classList.add("error");
+      els.setupAdminPw.focus();
+      return;
+    }
+    if (!runtime.setupDraft.gifts.length) {
+      els.setupGiftInput.classList.remove("error");
+      void els.setupGiftInput.offsetWidth;
+      els.setupGiftInput.classList.add("error");
+      els.setupGiftInput.focus();
+      return;
+    }
+    const sessionPw = els.setupSessionPw.value.trim();
+    const adminHash = await sha256Hex(adminPw);
+    const sessionHash = sessionPw ? await sha256Hex(sessionPw) : undefined;
+    const config = {
+      v: 1,
+      gifts: runtime.setupDraft.gifts.map(g => ({ ...g })),
+      theme: runtime.theme,
+      dudChance: parseInt(els.dudSlider.value, 10) / 100,
+      adminHash
+    };
+    if (sessionHash) config.sessionHash = sessionHash;
+    const payload = await encodeConfig(config, sessionPw || undefined);
+    const url = buildShareUrl(payload);
+    runtime.config = config;
+    runtime.payload = payload;
+    runtime.sessionPw = sessionPw || null;
+    runtime.gifts = config.gifts.map(g => ({ ...g }));
+    runtime.dudChance = config.dudChance;
+    runtime.configHash = await sha256Hex(payload);
+    showShare(url);
+  });
+
+  /* ============ SHARE VIEW ============ */
+  function showShare(url) {
+    setMode("share");
+    els.shareUrlInput.value = url;
+    renderQR(url, els.qrFrame);
+  }
+
+  els.copyUrlBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(els.shareUrlInput.value);
+      els.copyUrlBtn.classList.add("copied");
+      const orig = els.copyUrlBtn.textContent;
+      els.copyUrlBtn.textContent = "Copied!";
+      setTimeout(() => {
+        els.copyUrlBtn.classList.remove("copied");
+        els.copyUrlBtn.textContent = orig;
+      }, 1500);
+    } catch(e) {
+      els.shareUrlInput.select();
+    }
+  });
+
+  els.previewBtn.addEventListener("click", () => {
+    history.replaceState(null, "", FRAGMENT_PREFIX + runtime.payload);
+    setMode("lottery");
+    updateGiftCounter();
+  });
+
+  els.editSetupBtn.addEventListener("click", () => {
+    history.replaceState(null, "", window.location.pathname);
+    setMode("setup");
+  });
+
+  /* ============ RECIPIENT ROUTING ============ */
+  async function init() {
+    applyTheme(runtime.theme);
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith(FRAGMENT_PREFIX)) {
+      const draft = loadDraft();
+      if (draft) loadFromDraft(draft);
+      showSetup();
+      return;
+    }
+    const payload = hash.slice(FRAGMENT_PREFIX.length);
+    if (payload.startsWith("e:")) {
+      runtime.payload = payload;
+      showSessionPrompt();
+    } else if (payload.startsWith("p:")) {
+      try {
+        const config = await decodeConfig(payload);
+        await activateLottery(config, payload);
+      } catch(e) {
+        console.warn("plaintext decode failed", e);
+        showSetup();
+      }
+    } else {
+      showSetup();
+    }
+  }
+
+  async function activateLottery(config, payload) {
+    runtime.config = config;
+    runtime.payload = payload;
+    runtime.configHash = await sha256Hex(payload);
+    runtime.gifts = (config.gifts || []).map(g => ({ ...g }));
+    runtime.dudChance = Math.max(0, Math.min(0.5, config.dudChance || 0));
+    // Resume an in-progress round if it's structurally consistent with the current gifts
+    const stored = loadStoredRound(runtime.configHash);
+    const indicesValid = stored && Array.isArray(stored.queue) &&
+      stored.queue.every(it => it && (it.t === "d" || (it.t === "g" && typeof it.g === "number" && it.g < runtime.gifts.length)));
+    if (stored && indicesValid && stored.total === stored.queue.length && stored.index <= stored.total) {
+      runtime.round = stored;
+    } else {
+      runtime.round = buildRound();
+      persistRound();
+    }
+    applyTheme(THEME_ORDER.includes(config.theme) ? config.theme : "sanrio");
+    setMode("lottery");
+    updateGiftCounter();
+    updatePullBtnLabel();
+  }
+
+  /* ============ SESSION PASSWORD ============ */
+  function showSessionPrompt() {
+    setMode("locked");
+    els.sessionPwInput.value = "";
+    els.sessionPwInput.classList.remove("error");
+    setTimeout(() => els.sessionPwInput.focus(), 120);
+  }
+  async function submitSessionPw() {
+    const pw = els.sessionPwInput.value;
+    if (!pw) return;
+    try {
+      const config = await decodeConfig(runtime.payload, pw);
+      runtime.sessionPw = pw;
+      await activateLottery(config, runtime.payload);
+    } catch(e) {
+      els.sessionPwInput.classList.remove("error");
+      void els.sessionPwInput.offsetWidth;
+      els.sessionPwInput.classList.add("error");
+      els.sessionPwInput.value = "";
+    }
+  }
+  els.sessionSubmit.addEventListener("click", submitSessionPw);
+  els.sessionPwInput.addEventListener("keydown", e => { if (e.key === "Enter") submitSessionPw(); });
+
+  /* ============ GIFT COUNTER + DOME ============ */
+  function triesLeft() {
+    if (!runtime.round || runtime.round.total === 0) return 0;
+    return Math.max(0, runtime.round.total - runtime.round.index);
+  }
+
+  function updateGiftCounter() {
+    updateGiftCounterText();
+    updateMachineLabel();
+    if (!els.giftCounter) return;
+    if (runtime.mode !== "lottery" || runtime.gifts.length === 0) {
+      updateDomeCapsules(0);
+      return;
+    }
+    if (!runtime.gifts.some(isUnlocked)) {
+      updateDomeCapsules(0);
+      return;
+    }
+    updateDomeCapsules(triesLeft());
+  }
+
+  function updateGiftCounterText() {
+    if (!els.giftCounter) return;
+    if (runtime.mode !== "lottery" || runtime.gifts.length === 0) {
+      els.giftCounter.textContent = "";
+      els.pullBtn.disabled = false;
+      return;
+    }
+    const anyUnlocked = runtime.gifts.some(isUnlocked);
+    const hasLocked = runtime.gifts.some(g => !isUnlocked(g));
+    const nextUnlock = nextUnlockDate();
+    const unlockTmpl = nextUnlockTexts[runtime.theme] || nextUnlockTexts.sanrio;
+
+    if (!anyUnlocked) {
+      els.giftCounter.textContent = nextUnlock ? unlockTmpl(formatUnlockDate(nextUnlock)) : "";
+      els.pullBtn.disabled = runtime.isSpinning;
+      return;
+    }
+    els.pullBtn.disabled = runtime.isSpinning;
+    const left = triesLeft();
+    if (left === 0 && hasLocked && nextUnlock) {
+      // Round drained but a locked gift is waiting — surface the date instead
+      els.giftCounter.textContent = unlockTmpl(formatUnlockDate(nextUnlock));
+    } else if (left === 0) {
+      els.giftCounter.textContent = roundCompleteTexts[runtime.theme] || roundCompleteTexts.sanrio;
+    } else {
+      const tmpl = counterTemplates[runtime.theme] || counterTemplates.sanrio;
+      els.giftCounter.textContent = tmpl(left);
+    }
+  }
+
+  function updateDomeCapsules(activeLeft) {
+    const lockedCount = runtime.gifts.filter(g => !isUnlocked(g)).length;
+    // Locked capsules always claim their slots first so they're visible from the start
+    const lockedVisible = Math.min(5, lockedCount);
+    const activeVisible = Math.min(5 - lockedVisible, Math.max(0, activeLeft));
+    const shinyCount = countRemainingShiny();
+    const shinyVisible = Math.min(activeVisible, shinyCount);
+    for (let i = 1; i <= 5; i++) {
+      const inner = document.querySelector(`.dome-capsule-${i}`);
+      if (!inner || !inner.parentElement) continue;
+      const isLockedSlot = i <= lockedVisible;
+      const isActiveSlot = !isLockedSlot && i <= lockedVisible + activeVisible;
+      const activeSlotIdx = i - lockedVisible;
+      const isActiveShiny = isActiveSlot && activeSlotIdx <= shinyVisible;
+      if (isActiveSlot || isLockedSlot) {
+        inner.parentElement.style.display = "";
+        inner.classList.remove("consumed");
+      } else {
+        if (!inner.classList.contains("consumed") && inner.parentElement.style.display !== "none") {
+          inner.classList.add("consumed");
+          setTimeout(() => {
+            if (inner.classList.contains("consumed")) {
+              inner.parentElement.style.display = "none";
+            }
+          }, 700);
+        } else if (inner.parentElement.style.display === "none") {
+          inner.classList.add("consumed");
+        }
+      }
+      inner.classList.toggle("shiny", isActiveShiny);
+      inner.classList.toggle("locked", isLockedSlot);
+    }
+  }
+
+  function updateMachineLabel() {
+    const lbl = document.getElementById("machineLabel");
+    if (!lbl) return;
+    let n = 0;
+    if (runtime.mode === "lottery" && runtime.gifts.length > 0 && runtime.gifts.some(isUnlocked)) {
+      n = triesLeft();
+    }
+    lbl.textContent = machineLabelText(n);
+  }
+
+  function updatePullBtnLabel() {
+    if (runtime.mode !== "lottery") return;
+    const c = themeContent[runtime.theme];
+    const playAgain = playAgainLabels[runtime.theme] || playAgainLabels.sanrio;
+    if (isRoundComplete()) {
+      els.pullBtnText.textContent = playAgain;
+    } else {
+      els.pullBtnText.textContent = c.pull;
+    }
+    if (els.againBtn) {
+      els.againBtn.textContent = isRoundComplete() ? playAgain : "Pull again";
+    }
+  }
+
+  /* ============ LOTTERY: ROUND + SPIN ============ */
+  function buildRound() {
+    const allowed = [];
+    for (let i = 0; i < runtime.gifts.length; i++) {
+      if (isUnlocked(runtime.gifts[i])) allowed.push(i);
+    }
+    if (allowed.length === 0) return { queue: [], index: 0, total: 0 };
+    const items = [];
+    for (const i of allowed) items.push({ t: "g", g: i });
+    let dudCount = 0;
+    if (runtime.dudChance > 0 && runtime.dudChance < 1) {
+      dudCount = Math.round(allowed.length * runtime.dudChance / (1 - runtime.dudChance));
+    }
+    for (let i = 0; i < dudCount; i++) {
+      items.push({ t: "d", v: dudVariants[Math.floor(Math.random() * dudVariants.length)] });
+    }
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    return { queue: items, index: 0, total: items.length };
+  }
+
+  function persistRound() {
+    if (runtime.configHash) saveStoredRound(runtime.configHash, runtime.round);
+  }
+
+  function isRoundComplete() {
+    return !runtime.round || runtime.round.total === 0 || runtime.round.index >= runtime.round.total;
+  }
+
+  function countRemainingShiny() {
+    if (!runtime.round) return 0;
+    let count = 0;
+    for (let i = runtime.round.index; i < runtime.round.queue.length; i++) {
+      const it = runtime.round.queue[i];
+      if (it && it.t === "g" && runtime.gifts[it.g] && runtime.gifts[it.g].shiny) count++;
+    }
+    return count;
+  }
+
+  function spin() {
+    if (runtime.mode !== "lottery") return;
+    if (runtime.isSpinning) return;
+    if (!runtime.gifts || runtime.gifts.length === 0) {
+      revealGift(-1, { name: "More gifts coming soon ♡" });
+      return;
+    }
+    const explicitSkip = runtime.skipLockedInfo === true;
+    runtime.skipLockedInfo = false;
+    const alreadySeen = runtime.lockInfoSeen === true;
+    if (!runtime.gifts.some(isUnlocked)) {
+      revealLocked(false);
+      return;
+    }
+    // Round drained but a locked gift is still waiting — show date info once per drain cycle
+    if (!explicitSkip && !alreadySeen && isRoundComplete() && runtime.gifts.some(g => !isUnlocked(g))) {
+      runtime.lockInfoSeen = true;
+      revealLocked(true);
+      return;
+    }
+
+    if (isRoundComplete()) {
+      runtime.round = buildRound();
+      runtime.lockInfoSeen = false;
+      persistRound();
+      updateGiftCounter();
+      updatePullBtnLabel();
+    }
+
+    const item = runtime.round.queue[runtime.round.index];
+    runtime.round.index++;
+    persistRound();
+    // Text/sticker update immediately (number tick), but keep dome full during the shake.
+    updateGiftCounterText();
+    updateMachineLabel();
+    updatePullBtnLabel();
+
+    runtime.isSpinning = true;
+    els.pullBtn.disabled = true;
+    els.leverGroup.classList.add("pulled");
+    els.machineWrap.classList.add("shaking");
+
+    const isShinyDrop = item.t === "g" && runtime.gifts[item.g] && runtime.gifts[item.g].shiny;
+    els.dropCapsule.classList.toggle("shiny", !!isShinyDrop);
+
+    setTimeout(() => {
+      els.machineWrap.classList.remove("shaking");
+      // Drain the dome now that the shake has finished — one capsule has "left"
+      updateDomeCapsules(triesLeft());
+      els.dropCapsule.classList.remove("dropping");
+      void els.dropCapsule.offsetWidth;
+      els.dropCapsule.classList.add("dropping");
+    }, 1400);
+
+    setTimeout(() => els.leverGroup.classList.remove("pulled"), 1100);
+    setTimeout(() => {
+      if (item.t === "d") revealDud(item.v);
+      else revealGift(item.g, runtime.gifts[item.g]);
+    }, 2700);
+  }
+
+  function revealGift(index, gift) {
+    els.overlay.classList.remove("dud-mode");
+    els.overlay.classList.add("show");
+    els.capsuleReveal.classList.remove("cracked", "wobble");
+    els.giftCard.classList.remove("show", "shiny");
+    els.dudCard.classList.remove("show");
+    els.giftNameEl.textContent = gift.name;
+
+    const isShiny = !!(gift && gift.shiny);
+    if (isShiny) els.giftCard.classList.add("shiny");
+    const labelEl = els.giftCard.querySelector(".label");
+    if (labelEl) labelEl.textContent = isShiny ? (jackpotLabels[runtime.theme] || jackpotLabels.sanrio) : "You won";
+
+    if (gift.url && gift.url.trim() !== "") {
+      els.giftLinkBtn.href = gift.url;
+      els.giftLinkLabel.textContent = "Open the surprise";
+      els.giftLinkBtn.style.display = "inline-flex";
+    } else {
+      els.giftLinkBtn.style.display = "none";
+    }
+
+    els.claimHint.textContent = claimHints[runtime.theme] || claimHints.sanrio;
+
+    void els.capsuleReveal.offsetWidth;
+    els.capsuleReveal.classList.add("wobble");
+
+    setTimeout(() => {
+      els.capsuleReveal.classList.add("cracked");
+      burst(40, false);
+      if (isShiny) setTimeout(() => burst(30, false), 200);
+      setTimeout(() => els.giftCard.classList.add("show"), 250);
+      updateGiftCounter();
+      updatePullBtnLabel();
+    }, 1100);
+  }
+
+  function revealLocked(canPlayAgain) {
+    runtime.isSpinning = true;
+    els.pullBtn.disabled = true;
+    els.machineWrap.classList.add("locked-shake");
+    setTimeout(() => {
+      els.machineWrap.classList.remove("locked-shake");
+      els.overlay.classList.add("show", "dud-mode");
+      els.capsuleReveal.classList.remove("cracked", "wobble");
+      els.giftCard.classList.remove("show", "shiny");
+      els.dudCard.classList.remove("show");
+      els.dudSvgWrap.innerHTML = "";
+
+      els.dudCard.className = "dud-card dud-locked";
+      const next = nextUnlockDate();
+      const dateStr = next ? formatUnlockDate(next) : "later";
+      els.dudTagline.innerHTML = `Locked<div class="dud-sub">come back on ${dateStr}</div>`;
+      els.dudSvgWrap.innerHTML = lockSvg();
+      // Configure the action button: "Play again" rebuilds the unlocked round; otherwise loops
+      if (canPlayAgain) {
+        els.againBtn.textContent = playAgainLabels[runtime.theme] || playAgainLabels.sanrio;
+        els.againBtn.dataset.lockedAction = "playagain";
+      } else {
+        els.againBtn.textContent = "Pull again";
+        els.againBtn.dataset.lockedAction = "loop";
+      }
+      setTimeout(() => els.dudCard.classList.add("show"), 50);
+    }, 1000);
+  }
+
+  function lockSvg() {
+    return `
+      <svg width="80" height="100" viewBox="0 0 80 100">
+        <rect x="18" y="48" width="44" height="42" rx="6" fill="var(--text-soft)" opacity="0.85"/>
+        <path d="M28 48 v-12 a12 12 0 0 1 24 0 v12" fill="none" stroke="var(--text-soft)" stroke-width="6" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="40" cy="66" r="4" fill="var(--gift-card-bg)"/>
+        <rect x="38" y="66" width="4" height="10" fill="var(--gift-card-bg)"/>
+      </svg>`;
+  }
+
+  function revealDud(forcedVariant) {
+    els.overlay.classList.add("show","dud-mode");
+    els.capsuleReveal.classList.remove("cracked", "wobble");
+    els.giftCard.classList.remove("show", "shiny");
+    els.dudCard.classList.remove("show");
+    els.dudSvgWrap.innerHTML = "";
+
+    const variant = forcedVariant || dudVariants[Math.floor(Math.random() * dudVariants.length)];
+    els.dudCard.className = `dud-card dud-${variant}`;
+    const taglines = dudTaglines[runtime.theme] || dudTaglines.sanrio;
+    els.dudTagline.textContent = taglines[variant] || "Try again!";
+
+    void els.capsuleReveal.offsetWidth;
+    els.capsuleReveal.classList.add("wobble");
+
+    setTimeout(() => {
+      els.capsuleReveal.classList.add("cracked");
+      burst(14, true);
+      setTimeout(() => {
+        els.dudSvgWrap.innerHTML = dudSvgFor(variant);
+        els.dudCard.classList.add("show");
+      }, 250);
+      updateGiftCounter();
+      updatePullBtnLabel();
+    }, 1100);
+  }
+
+  function dudSvgFor(v) {
+    if (v === "empty") return `
+      <svg width="120" height="100" viewBox="0 0 120 100">
+        <g class="dud-dust">
+          <circle class="puff" cx="40" cy="55" r="14" fill="rgba(150,150,150,0.55)"/>
+          <circle class="puff" cx="60" cy="48" r="20" fill="rgba(170,170,170,0.5)"/>
+          <circle class="puff" cx="80" cy="55" r="14" fill="rgba(150,150,150,0.55)"/>
+        </g>
+        <text x="60" y="92" text-anchor="middle" font-size="13" fill="var(--text-soft)" style="font-family:var(--body-font)">poof</text>
+      </svg>`;
+    if (v === "fish") return `
+      <svg width="120" height="100" viewBox="0 0 120 100">
+        <g class="dud-fish">
+          <g>
+            <ellipse cx="60" cy="50" rx="28" ry="14" fill="var(--accent)"/>
+            <path d="M 88 50 L 108 38 L 108 62 Z" fill="var(--accent)"/>
+            <circle cx="48" cy="46" r="3" fill="#222"/>
+            <circle cx="49" cy="45" r="1" fill="#fff"/>
+            <path d="M 35 52 Q 40 47 46 52" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+        </g>
+        <circle cx="30" cy="30" r="3" fill="rgba(120,180,220,0.55)"/>
+        <circle cx="22" cy="60" r="2" fill="rgba(120,180,220,0.45)"/>
+        <circle cx="14" cy="42" r="2" fill="rgba(120,180,220,0.4)"/>
+      </svg>`;
+    if (v === "note") return `
+      <svg width="120" height="100" viewBox="0 0 120 100">
+        <g class="dud-note">
+          <g>
+            <rect x="24" y="18" width="72" height="64" rx="2" fill="#fff8d8" stroke="var(--text-soft)" stroke-width="1.5"/>
+            <line x1="34" y1="32" x2="86" y2="32" stroke="rgba(0,0,0,0.13)" stroke-width="0.8"/>
+            <line x1="34" y1="40" x2="86" y2="40" stroke="rgba(0,0,0,0.13)" stroke-width="0.8"/>
+            <text x="60" y="60" text-anchor="middle" font-size="13" fill="var(--accent)" font-weight="700" style="font-family:var(--body-font)">TRY AGAIN</text>
+          </g>
+        </g>
+      </svg>`;
+    if (v === "balloon") return `
+      <svg width="120" height="110" viewBox="0 0 120 110">
+        <g class="dud-balloon">
+          <g>
+            <ellipse cx="60" cy="42" rx="24" ry="30" fill="var(--accent)"/>
+            <path d="M 56 70 L 60 76 L 64 70 Z" fill="var(--accent)" opacity="0.9"/>
+            <line x1="60" y1="76" x2="60" y2="105" stroke="var(--text-soft)" stroke-width="1.5"/>
+            <ellipse cx="50" cy="32" rx="6" ry="3" fill="rgba(255,255,255,0.5)"/>
+          </g>
+        </g>
+      </svg>`;
+    return "";
+  }
+
+  function closeReveal() {
+    els.overlay.classList.remove("show","dud-mode");
+    els.capsuleReveal.classList.remove("cracked");
+    els.giftCard.classList.remove("show");
+    els.dudCard.classList.remove("show");
+    els.dropCapsule.classList.remove("dropping","shiny");
+    runtime.isSpinning = false;
+    els.pullBtn.disabled = false;
+  }
+
+  els.pullBtn.addEventListener("click", spin);
+  els.leverGroup.addEventListener("click", spin);
+  els.closeBtn.addEventListener("click", closeReveal);
+  els.againBtn.addEventListener("click", () => {
+    const action = els.againBtn.dataset.lockedAction;
+    delete els.againBtn.dataset.lockedAction;
+    closeReveal();
+    if (action === "playagain") {
+      // Skip the locked-info reveal on the very next spin so the user gets a normal pull
+      runtime.skipLockedInfo = true;
+    }
+    setTimeout(spin, 300);
+  });
+  els.overlay.addEventListener("click", e => { if (e.target === els.overlay) closeReveal(); });
+
+  /* ============ CONFETTI / FIZZLE ============ */
+  function burst(n, fizzle) {
+    const stage = document.querySelector(".reveal-stage");
+    const css = getComputedStyle(document.documentElement);
+    const colors = fizzle
+      ? [css.getPropertyValue("--text-soft").trim()]
+      : [
+          css.getPropertyValue("--primary").trim(),
+          css.getPropertyValue("--accent").trim(),
+          css.getPropertyValue("--capsule-a").trim(),
+          css.getPropertyValue("--capsule-b").trim()
+        ];
+    const shapes = fizzle ? ["circle"] :
+                    runtime.theme === "arcade" ? ["square"]
+                  : runtime.theme === "cosy"   ? ["leaf","circle","heart"]
+                  : runtime.theme === "beach"  ? ["circle","star","wavelet"]
+                  : ["heart","circle","star"];
+
+    for (let i=0;i<n;i++) {
+      const piece = document.createElement("div");
+      piece.className = "confetti";
+      const color = colors[Math.floor(Math.random()*colors.length)];
+      const shape = shapes[Math.floor(Math.random()*shapes.length)];
+      piece.innerHTML = makeShape(shape, color);
+      stage.appendChild(piece);
+      const angle = Math.random() * Math.PI * 2;
+      const dist = (fizzle ? 50 : 120) + Math.random() * (fizzle ? 80 : 220);
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - (fizzle ? 20 : 60);
+      const rot = (Math.random() - 0.5) * 720;
+      const dur = (fizzle ? 700 : 900) + Math.random() * (fizzle ? 300 : 700);
+      piece.animate([
+        { transform: "translate(-50%,-50%) rotate(0)", opacity: 1 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg)`, opacity: 0 }
+      ], { duration: dur, easing: "cubic-bezier(.2,.8,.4,1)" });
+      setTimeout(() => piece.remove(), dur);
+    }
+  }
+
+  function makeShape(shape, color) {
+    if (shape === "heart")   return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${color}"><path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/></svg>`;
+    if (shape === "star")    return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${color}"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg>`;
+    if (shape === "square")  return `<div style="width:10px;height:10px;background:${color};box-shadow:0 0 6px ${color}"></div>`;
+    if (shape === "leaf")    return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${color}"><path d="M5 19c8-1 13-6 14-14-8 1-13 6-14 14z"/></svg>`;
+    if (shape === "wavelet") return `<svg width="18" height="10" viewBox="0 0 18 10" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round"><path d="M1 5 Q 4 1 7 5 T 13 5 T 17 5"/></svg>`;
+    return `<div style="width:10px;height:10px;border-radius:50%;background:${color}"></div>`;
+  }
+
+  /* ============ ADMIN UNLOCK ============ */
+  let tapCount = 0;
+  let tapTimer = null;
+
+  els.title.addEventListener("click", () => {
+    if (runtime.mode !== "lottery") return;
+    els.title.classList.remove("tapped");
+    void els.title.offsetWidth;
+    els.title.classList.add("tapped");
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { tapCount = 0; }, SECRET_TAP_WINDOW);
+    if (tapCount >= SECRET_TAPS) {
+      tapCount = 0;
+      if (tapTimer) clearTimeout(tapTimer);
+      openAdminPrompt();
+    }
+  });
+
+  function openAdminPrompt() {
+    if (runtime.isAdmin) {
+      els.panel.classList.add("open");
+      renderRecipientGifts();
+      return;
+    }
+    els.adminCodeInput.value = "";
+    els.adminCodeInput.classList.remove("error");
+    els.adminModal.classList.add("show");
+    setTimeout(() => els.adminCodeInput.focus(), 100);
+  }
+  function closeAdminPrompt() { els.adminModal.classList.remove("show"); }
+
+  async function submitAdmin() {
+    const pw = els.adminCodeInput.value;
+    if (!pw || !runtime.config) {
+      shakeAdmin(); return;
+    }
+    const hash = await sha256Hex(pw);
+    if (hash === runtime.config.adminHash) {
+      runtime.isAdmin = true;
+      document.body.classList.add("admin");
+      closeAdminPrompt();
+      els.panel.classList.add("open");
+      renderRecipientGifts();
+    } else {
+      shakeAdmin();
+    }
+  }
+  function shakeAdmin() {
+    els.adminCodeInput.classList.remove("error");
+    void els.adminCodeInput.offsetWidth;
+    els.adminCodeInput.classList.add("error");
+    els.adminCodeInput.value = "";
+  }
+  els.adminSubmit.addEventListener("click", submitAdmin);
+  els.adminCodeInput.addEventListener("keydown", e => { if (e.key === "Enter") submitAdmin(); });
+  els.adminCancel.addEventListener("click", closeAdminPrompt);
+  els.adminModal.addEventListener("click", e => { if (e.target === els.adminModal) closeAdminPrompt(); });
+
+  function lockAdmin() {
+    runtime.isAdmin = false;
+    document.body.classList.remove("admin");
+    els.panel.classList.remove("open");
+  }
+  els.lockBtn.addEventListener("click", lockAdmin);
+
+  /* ============ RECIPIENT GIFT EDITOR ============ */
+  function renderRecipientGifts() {
+    els.giftListEl.innerHTML = "";
+    if (!runtime.gifts.length) {
+      const li = document.createElement("li");
+      li.style.justifyContent = "center";
+      li.style.color = "var(--text-soft)";
+      li.textContent = "No gifts yet — add some above!";
+      els.giftListEl.appendChild(li);
+      return;
+    }
+    runtime.gifts.forEach((g, i) => {
+      const li = document.createElement("li");
+      const info = document.createElement("div");
+      info.className = "gift-info";
+      const text = document.createElement("div");
+      text.className = "gift-text";
+      text.textContent = g.name;
+      info.appendChild(text);
+      if (g.url) {
+        const url = document.createElement("a");
+        url.className = "gift-url";
+        url.href = g.url;
+        url.target = "_blank";
+        url.rel = "noopener noreferrer";
+        url.textContent = g.url;
+        info.appendChild(url);
+      }
+      if (g.unlockOn) {
+        const lk = document.createElement("span");
+        lk.className = "gift-lock-indicator";
+        const today = todayIso();
+        lk.textContent = (g.unlockOn > today ? "🔒 " : "🔓 ") + "unlocks " + formatUnlockDate(g.unlockOn);
+        info.appendChild(lk);
+      }
+      const dateInput = document.createElement("input");
+      dateInput.type = "date";
+      dateInput.className = "gift-date" + (g.unlockOn ? " set" : "");
+      dateInput.value = g.unlockOn || "";
+      dateInput.min = todayIso();
+      dateInput.max = maxLockIso();
+      dateInput.title = "Lock this gift until a date";
+      dateInput.addEventListener("change", () => {
+        g.unlockOn = dateInput.value || undefined;
+        if (!g.unlockOn) delete g.unlockOn;
+        renderRecipientGifts();
+        rebuildRoundFromEdit();
+      });
+      const star = document.createElement("button");
+      star.type = "button";
+      star.className = "shiny-toggle" + (g.shiny ? " on" : "");
+      star.innerHTML = g.shiny ? "★" : "☆";
+      star.title = g.shiny ? "Special prize" : "Mark as special";
+      star.addEventListener("click", () => {
+        g.shiny = !g.shiny;
+        renderRecipientGifts();
+        rebuildRoundFromEdit();
+      });
+      const btn = document.createElement("button");
+      btn.innerHTML = "×";
+      btn.title = "Remove";
+      btn.addEventListener("click", () => {
+        runtime.gifts.splice(i, 1);
+        renderRecipientGifts();
+        rebuildRoundFromEdit();
+      });
+      li.appendChild(info);
+      li.appendChild(dateInput);
+      li.appendChild(star);
+      li.appendChild(btn);
+      els.giftListEl.appendChild(li);
+    });
+  }
+
+  function rebuildRoundFromEdit() {
+    runtime.round = buildRound();
+    persistRound();
+    updateGiftCounter();
+    updatePullBtnLabel();
+  }
+
+  els.addForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = els.giftInput.value.trim();
+    const url = els.giftUrlInput.value.trim();
+    if (!name) return;
+    const entry = { name };
+    if (url) entry.url = url;
+    runtime.gifts.push(entry);
+    els.giftInput.value = "";
+    els.giftUrlInput.value = "";
+    renderRecipientGifts();
+    els.giftInput.focus();
+    rebuildRoundFromEdit();
+  });
+
+  els.gearBtn.addEventListener("click", () => { els.panel.classList.add("open"); renderRecipientGifts(); });
+  els.panelClose.addEventListener("click", () => els.panel.classList.remove("open"));
+
+  els.copyShareLinkBtn.addEventListener("click", async () => {
+    if (!runtime.config) return;
+    const newConfig = {
+      ...runtime.config,
+      gifts: runtime.gifts.map(g => ({ ...g })),
+      theme: runtime.theme
+    };
+    const wasEncrypted = runtime.payload && runtime.payload.startsWith("e:");
+    let payload;
+    if (wasEncrypted) {
+      if (!runtime.sessionPw) {
+        const orig = els.copyShareLinkBtn.textContent;
+        els.copyShareLinkBtn.textContent = "Re-enter session password to update link";
+        setTimeout(() => { els.copyShareLinkBtn.textContent = orig; }, 2400);
+        return;
+      }
+      payload = await encodeConfig(newConfig, runtime.sessionPw);
+    } else {
+      payload = await encodeConfig(newConfig);
+    }
+    const url = buildShareUrl(payload);
+    try {
+      await navigator.clipboard.writeText(url);
+      els.copyShareLinkBtn.classList.add("copied");
+      const orig = els.copyShareLinkBtn.textContent;
+      els.copyShareLinkBtn.textContent = "Copied!";
+      setTimeout(() => {
+        els.copyShareLinkBtn.classList.remove("copied");
+        els.copyShareLinkBtn.textContent = orig;
+      }, 1800);
+      history.replaceState(null, "", FRAGMENT_PREFIX + payload);
+      runtime.payload = payload;
+      runtime.config = newConfig;
+      runtime.configHash = await sha256Hex(payload);
+      // Migrate the in-memory round to the new hash (or rebuild if it doesn't fit)
+      const indicesValid = runtime.round && runtime.round.queue.every(
+        it => it && (it.t === "d" || (it.t === "g" && it.g < runtime.gifts.length))
+      );
+      if (!indicesValid) runtime.round = buildRound();
+      persistRound();
+      updateGiftCounter();
+      updatePullBtnLabel();
+    } catch(e) {}
+  });
+
+  /* ============ ESC handler ============ */
+  window.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (els.adminModal.classList.contains("show")) { closeAdminPrompt(); return; }
+    if (els.panel.classList.contains("open"))      { lockAdmin(); return; }
+    if (els.overlay.classList.contains("show"))    { closeReveal(); return; }
+    els.themeMenu.classList.remove("open");
+  });
+
+  /* ============ QR ============ */
+  function renderQR(text, container) {
+    const oldFb = container.parentNode.querySelector(".qr-fallback");
+    if (oldFb) oldFb.remove();
+    container.innerHTML = "";
+    container.style.display = "";
+    const cap = document.querySelector(".qr-caption");
+    if (typeof window.qrSvg === "function") {
+      try {
+        container.innerHTML = window.qrSvg(text);
+        if (cap) cap.style.display = "";
+        return;
+      } catch(e) {
+        console.warn("QR render failed:", e && e.message);
+      }
+    }
+    container.style.display = "none";
+    if (cap) cap.style.display = "none";
+    const fb = document.createElement("div");
+    fb.className = "qr-fallback";
+    fb.textContent = "Link is too long for a QR — copy and send the URL instead.";
+    container.parentNode.insertBefore(fb, container.nextSibling);
+  }
+
+  /* ============ INIT ============ */
+  init();
+})();
+</script>
+</body>
+</html>
